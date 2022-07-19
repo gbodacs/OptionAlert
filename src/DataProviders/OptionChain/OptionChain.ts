@@ -6,5 +6,5 @@ export type OptionChainData = {
 
 export abstract class OptionChain {
   abstract Init(): Promise<boolean>;
-  abstract GetOptionChainElements(): OptionChainData[];
+  abstract GetOptionChainElements(ticker: string): Promise<OptionChainData[]>;
 }
