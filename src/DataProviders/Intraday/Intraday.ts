@@ -1,6 +1,14 @@
-
-abstract class Intraday {
-  abstract GetIntradayData(ticker: string): void
+interface IntradayData {
+  open: number[];
+  close: number[];
+  high: number[];
+  low: number[];
+  volume: number[];
+  timestamp: number[];
 }
 
-export default Intraday
+abstract class Intraday {
+  abstract GetIntradayData(ticker: string, start: number, end: number): void;
+}
+
+export { Intraday, IntradayData };

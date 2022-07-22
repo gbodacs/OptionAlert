@@ -1,37 +1,54 @@
-import Intraday from "./Intraday";
-import axios from "axios"
+import {Intraday, IntradayData} from "./Intraday";
+import axios from "axios";
+import { AxiosResponse } from "axios";
+import { OptionChain, OptionChainData } from "../OptionChain/OptionChain";
+import logger from "../../../utils/logger"
 
 class YahooIntraday implements Intraday {
-  async GetIntradayData(ticker: string): Promise<void> {
-      const options = {
-        method: "GET",
-        url: "https://query1.finance.yahoo.com/v8/finance/chart/"+ticker,
-        params: {
-          //period1: toTimestamp('07/13/2022 13:55:00'),//"2022/07/13-09:00:00", // todo: start of the day moment
-          //period2: toTimestamp('07/13/2022 14:30:00'),//"2022/07/13-11:10:00",  // todo: current moment
-          StartDateInclusive: '2022-07-12',
-          EndDateInclusive: '2022-07-13',
-          interval: "1m",
-          includePrePost: "true",
-        }
-      };
-    
-      try {
-        response = await axios.request(options);
-        if (response.data.chart.error) {
-          throw new Error(response.data.chart.error)
-        }
-    
-        timestamp = response.data.chart.result[0].timestamp;
-        quote = response.data.chart.result[0].indicators.quote[0];
-        quote['timestamp'] = [...timestamp];
-        quote['identifier'] = ticker;
-        return quote;
-      } catch (error) {
-        console.error("Unable to download chart data");
-        console.error(error);
-        return {};
+  toTimestamp(strDate: string):string {
+    const ret = (Date.parse(strDate)/1000);
+    return ret.toString();
+  }
+
+  async GetIntradayData(ticker: string, start: number, end: number): Promise<IntradayData|undefined> {
+    // Ez igy az egesz napot visszaadja, hiaba egy kis darabot kerek belole
+    const options = {
+      method: "GET",
+      url: "https://query1.finance.yahoo.com/v8/finance/chart/" + ticker,
+      params: {
+        period1: start.toString(),
+        period2: end.toString(),
+        interval: "1m",
+        range: "1d",
+        includePrePost: "true",
+      },
+    };
+
+    try {
+      const resp: AxiosResponse = await axios.request(options);
+      if (resp.data.chart.error !== null) {
+        throw new Error("Error: " + resp.data.chart.error);
       }
+      if (resp.status === 200) {
+        const ret: IntradayData = {
+          timestamp: resp.data.chart.result[0].timestamp,
+          close: resp.data.chart.result[0].indicators.quote[0].close,
+          open: resp.data.chart.result[0].indicators.quote[0].open,
+          low: resp.data.chart.result[0].indicators.quote[0].low,
+          high: resp.data.chart.result[0].indicators.quote[0].high,
+          volume: resp.data.chart.result[0].indicators.quote[0].volume
+        }
+        return ret;
+      };
+      throw new Error("Error: resp.status!=200 resp:" + resp.toString());
+    } catch (error) {
+      let message
+      if (error instanceof Error) message = error.message
+      else message = String(error)
+      logger.error("Error getting chart data: " + message);
+      return;
     }
   }
 }
+
+export default YahooIntraday

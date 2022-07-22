@@ -1,53 +1,87 @@
-import Candle from "../Candle";
-import {TickerData, ChartDataType, CandleType} from "./CandleStore.d"
+import { TickerData, CandleType } from "./CandleStore.d";
 
-class CandleStore {  // Stores All tickerData in an object
-  constructor() {
-  }
+class CandleStore {
+  // Stores All tickerData in an object
+  DataStore: TickerData[] = [
+    {
+      ticker: "A",
+      chartData: [
+        { open: 0.1, close: 0.2, low: 0.02, high: 0.3, volume: 10, timestamp: 11 },
+        { open: 0.1, close: 0.2, low: 0.02, high: 0.3, volume: 10, timestamp: 11 },
+        { open: 0.1, close: 0.2, low: 0.02, high: 0.3, volume: 10, timestamp: 11 },
+      ],
+    },
+    {
+      ticker: "B",
+      chartData: [
+        { open: 0.1, close: 0.2, low: 0.02, high: 0.3, volume: 10, timestamp: 11 },
+        { open: 0.1, close: 0.2, low: 0.02, high: 0.3, volume: 10, timestamp: 11 },
+        { open: 0.1, close: 0.2, low: 0.02, high: 0.3, volume: 10, timestamp: 11 },
+      ],
+    },
+  ];
 
-  DataStore: TickerData[] = [{
-    "ticker": "A",
-    "chartData": {
-      0: { "open": 0.1, "close": 0.2, "low":0.02, "high": 0.3, "volume": 10 },
-      1: { "open": 0.1, "close": 0.2, "low":0.02, "high": 0.3, "volume": 10 },
-      2: { "open": 0.1, "close": 0.2, "low":0.02, "high": 0.3, "volume": 10 },
-    }
-  },
-  {
-    "ticker": "B",
-    "chartData": {
-      0: { "open": 0.1, "close": 0.2, "low":0.02, "high": 0.3, "volume": 10 },
-      1: { "open": 0.1, "close": 0.2, "low":0.02, "high": 0.3, "volume": 10 },
-      2: { "open": 0.1, "close": 0.2, "low":0.02, "high": 0.3, "volume": 10 },
-    }
-  }];
-
-  private _MergeTickerData(store: TickerData, add: TickerData) {
-    var list = Object.keys(add.chartData)
-    list.forEach(element => { 
-      var item = store.chartData[+element]
-      if ( item === undefined ) { // Add candle and store
-        store.chartData[+element] = add.chartData[+element]
+  /*private _MergeTickerData(store: TickerData, add: TickerData) {
+    const list = Object.keys(add.chartData);
+    list.forEach((element) => {
+      const item = store.chartData[+element];
+      if (item === undefined) {
+        // Add candle and store
+        store.chartData[+element] = add.chartData[+element];
       }
     });
-  }
+  }*/
 
-  AddTickerDataByTicker(ticker: string, add:TickerData): boolean {
-    const item: TickerData|undefined = this.GetTickerDataByTicker(ticker)
-    if (item === undefined) { // Add new item
-      this.DataStore.push(add)
+  private TimestampPresent(ticker: string, timestamp: number): boolean {
+    const item: TickerData | undefined = this.GetTickerDataByTicker(ticker);
+    if (item === undefined)
+      return false;
+
+    const chartData:CandleType[] = item.chartData;
+    if (chartData === undefined)
       return false
-    }
-    
-    this._MergeTickerData(item, add); // Merge old item with new data
+
+    const found = chartData.find( (element:CandleType) => element.timestamp === timestamp)
+    if (found === undefined)
+      return false
     return true;
   }
 
-  GetTickerDataByTicker(ticker2: String): TickerData|undefined {
-    return this.DataStore.find((item) => ticker2 === item.ticker)
+  AddTickerDataByTicker(ticker: string, open: number[], close: number[], low: number[], high: number[], volume: number[], timestamp: number[]): boolean {
+    const item: TickerData | undefined = this.GetTickerDataByTicker(ticker);
+    if (item === undefined) {
+      // Add new item
+      // Add element to DataStore
+      const chartData2: CandleType[] = [];
+      for (let i = 0; i < open.length; i++) {
+        chartData2.push({
+          open: open[i], close: close[i], low: low[i], high: high[i], volume: volume[i], timestamp: timestamp[i],
+        });
+
+        this.DataStore.push({
+          "ticker": ticker,
+          "chartData": chartData2,
+        });
+      }
+      return true;
+    } else {
+      // Ticker already present, add new data to it
+      const candleData: CandleType[] = item.chartData;
+      for (let i = 0; i < open.length; i++) {
+        if (this.TimestampPresent(ticker, timestamp[i]))
+          continue;
+
+        candleData.push({open: open[i], close: close[i], low: low[i], high: high[i], volume: volume[i], timestamp: timestamp[i] });
+      }
+    }
+    return true;
   }
 
-  GetFirstCandleTimeStamp(ticker: string): number|undefined {
+  GetTickerDataByTicker(ticker2: string): TickerData | undefined {
+    return this.DataStore.find((item) => ticker2 === item.ticker);
+  }
+
+  GetFirstCandleTimeStamp(ticker: string): number | undefined {
     return undefined;
   }
 }

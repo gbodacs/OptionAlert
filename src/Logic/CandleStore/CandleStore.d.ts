@@ -1,16 +1,13 @@
-export type CandleType = {  // Contains one candle
+export interface CandleType {  // Contains one candle
   open: number;
   close: number;
-  low: number
-  high: number
-  volume: number
+  low: number;
+  high: number;
+  volume: number;
+  timestamp:number;
 }
 
-export type ChartDataType = { //Helper type
-  [timestamp:number]: CandleType;
-}
-
-export type TickerData = { // Stores all data for one ticker
+export interface TickerData { // Stores all data for one ticker
   ticker: String;
-  chartData: ChartDataType // An associative array of candles with timestamp
+  chartData: CandleType[] // An array of candles with timestamp
 }

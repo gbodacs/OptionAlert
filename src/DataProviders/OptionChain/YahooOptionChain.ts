@@ -1,75 +1,49 @@
 import axios from "axios";
-import {AxiosResponse} from "axios";
+import { AxiosResponse } from "axios";
+import logger from "../../../utils/logger";
 import { OptionChain, OptionChainData } from "./OptionChain";
 
-
-
- class YahooOptionChain implements OptionChain{
-  async Init():Promise<boolean> {
-
-    return false;
-  }
-
-  async GetOptionChainElements(ticker: string): Promise<OptionChainData[]> {
+class YahooOptionChain implements OptionChain {
+  async GetOptionChainElements(ticker: string): Promise<OptionChainData | undefined> {
     const options = {
       method: "GET",
       url: "https://query1.finance.yahoo.com/v7/finance/options/" + ticker,
     };
-  
+
     try {
-      const response: Promise<AxiosResponse<any,any>> = await axios.request(options);
-  
-      symbol = response.data.optionChain.result[0].underlyingSymbol;
-      name = response.data.optionChain.result[0].quote.longName;
-      bid = response.data.optionChain.result[0].quote.bid;
-      ask = response.data.optionChain.result[0].quote.ask;
-      dates = response.data.optionChain.result[0].expirationDates;
-  
-      const CallOptions = response.data.optionChain.result[0].options[0].calls;
-      const PutOptions = response.data.optionChain.result[0].options[0].puts;
-  
-      return { call: CallOptions, put: PutOptions };
-  
-      //const strikes = response.data.optionChain.result[0].strikes;
+      const resp: AxiosResponse = await axios.request(options);
+      if (resp.data.optionChain.error !== null) {
+        throw new Error("Error: " + resp.data.optionChain.error);
+      }
+
+      if (resp.data.optionChain.result[0].expirationDates.length === 0 || resp.data.optionChain.result[0].strikes.length === 0) {
+        throw new Error("Error: no option on this ticker: " + ticker);
+      }
+
+      if (resp.status === 200) {
+        const ret: OptionChainData = {
+          underlyingSymbol: resp.data.optionChain.result[0].underlyingSymbol,
+          underlyingLongName: resp.data.optionChain.result[0].quote.longName,
+          underlyingBid: resp.data.optionChain.result[0].quote.bid,
+          underlyingAsk: resp.data.optionChain.result[0].quote.ask,
+          expirationDates: resp.data.optionChain.result[0].expirationDates,
+          strikes: resp.data.optionChain.result[0].strikes,
+          calls: resp.data.optionChain.result[0].options[0].calls,
+          puts: resp.data.optionChain.result[0].options[0].puts,
+        };
+
+        return ret;
+      } else {
+        throw new Error("Error: resp.status!=200 resp:" + resp.toString());
+      }
     } catch (error) {
-      console.error("Error getting option chain");
-      console.error(error);
-      return { call: [], put: [] };
+      let message;
+      if (error instanceof Error) message = error.message;
+      else message = String(error);
+      logger.error("Error getting option chain:" + message);
+      return undefined;
     }
   }
 }
 
-export default YahooOptionChain
-
-
-/**/
-import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
-
-
-let k = 0;
-
-export const search = async (location: string) => {
-
-  // call hotels4 locations/v2/search endpoint
-  const options: AxiosRequestConfig = {
-    method: 'GET',
-    url: 'https://hotels4.p.rapidapi.com/locations/v2/search',
-    headers: {
-      'X-RapidAPI-Host': 'hotels4.p.rapidapi.com',
-      'X-RapidAPI-Key': "sdgfsdgsdgf98s",
-    },
-    params: {
-      locale: 'en_US',
-      currency: 'USD',
-      query: location
-    }
-  }
-
-  let resp: AxiosResponse = await axios.request(options);
-  if (resp.status == 429) {
-    k++;
-    resp = await axios.request(options);
-  }
-  return resp;
-}
-/**/
+export default YahooOptionChain;
