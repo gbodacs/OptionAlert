@@ -15,8 +15,8 @@ class FidelityIntraday implements Intraday {
 
   toFidelityTickerFormat(ticker: string): string {
     if (ticker.length > 10)
-      return "-"+ticker
-    return "."+ticker
+      return "-"+ticker // probably an option ticker?
+    return "."+ticker // probably a non-option ticker?
   }
 
   toExplodedArray(in2: string): number[] {

@@ -1,6 +1,5 @@
-import { CandleType } from "../CandleStore/CandleStore.d";
 import StrategyBase from "./StrategyBase";
-import Global, {VOLUME_MIN} from "../../Global/Global";
+import Global from "../../Global/Global";
 import logger from "../../../utils/logger";
 import {Vwap, VwapInput} from "../../Indicators/vwap"
 
@@ -27,7 +26,7 @@ class VwapAboveStrategy extends StrategyBase {
       return;
     }
 
-    // Calculate VWAP
+    // Create input data for VWAP calculation
     const input: VwapInput[] = []
     const chartData = item.chartData;
     for (let i=startIndex; i<chartData.length; i++) {
@@ -35,6 +34,7 @@ class VwapAboveStrategy extends StrategyBase {
       input.push({"price": elem.close, "volume": elem.volume})
     }
 
+    // Calculate VWAP
     const vwapValues: number[] = Vwap(input);
     if (vwapValues.length !== input.length) {
       logger.warning("vwapValues calculation array size problem!")

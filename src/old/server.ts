@@ -6,20 +6,14 @@ import Global from "./OptionAlert/Global/Global"
 import VolumeAboveStrategy from "./OptionAlert/Logic/Strategy/VolumeAbove"
 import VwapAboveStrategy from "./OptionAlert/Logic/Strategy/VwapUnder";
 
-
-const OP_TICKER = "SPY220722P385"
-const UN_TICKER = "SPY"
-
 class OptionAlertHandler {
-  constructor() {}
-
   /* Create Strategies */
-  volStrategy: VolumeAboveStrategy = new VolumeAboveStrategy(OP_TICKER);
-  vwapStrategy: VwapAboveStrategy = new VwapAboveStrategy(OP_TICKER);
+  volStrategy: VolumeAboveStrategy = new VolumeAboveStrategy(Global.getInstance().getOptionTicker());
+  vwapStrategy: VwapAboveStrategy = new VwapAboveStrategy(Global.getInstance().getOptionTicker());
 
   /* Create API call classes */
-  yoc = new YahooOptionChain();
-  yid = new FidelityIntraday();
+  optionChain = new YahooOptionChain();
+  optionIntraday = new YahooIntraday();
 
   /* Current day date init */
   currTime = 1658138003  // Todo: remove test time and date
@@ -28,7 +22,7 @@ async init() {
   logger.info(`Init - Start`);
 
   /* Get Option Chain */
-  const optionChain = await this.yoc.GetOptionChainElements(UN_TICKER);
+  const optionChain = await this.optionChain.GetOptionChainElements(Global.getInstance().getUnderlyingTicker());
   if (optionChain === undefined)
     return; // todo failed
   logger.info(optionChain.toString());
@@ -36,13 +30,17 @@ async init() {
 
 async main() {
     /* Get Intraday info */
-  const intraDay = await this.yid.GetIntradayData(OP_TICKER, this.currTime, this.currTime+200);
-  if(intraDay === undefined)
+  const intraDay = await this.optionIntraday.GetIntradayData(Global.getInstance().getOptionTicker(), this.currTime, this.currTime+200);
+  if(intraDay === undefined) {
+    logger.warning("Response is undefined.")
     return;
-  if(intraDay.timestamp === undefined)
+  }
+  if(intraDay.timestamp === undefined) {
+    logger.warning("No value in response. Market closed and Yahoo input?")
     return; // todo market closed? report fail
+  }
 
-  Global.getInstance().getCandleStore().AddTickerDataByTicker(OP_TICKER, intraDay.open, intraDay.close, intraDay.low, intraDay.high, intraDay.volume, intraDay.timestamp );
+  Global.getInstance().getCandleStore().AddTickerDataByTicker(Global.getInstance().getOptionTicker(), intraDay.open, intraDay.close, intraDay.low, intraDay.high, intraDay.volume, intraDay.timestamp );
   // const LastTicker:number = intraDay.timestamp[intraDay.timestamp.length-1];
 
   this.volStrategy.Tick();

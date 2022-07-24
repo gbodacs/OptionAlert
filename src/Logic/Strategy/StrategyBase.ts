@@ -1,4 +1,3 @@
-import { CandleType } from '../CandleStore/CandleStore.d';
 import Global from "../../Global/Global";
 import logger from "../../../utils/logger";
 
