@@ -7,7 +7,7 @@ export interface CandleType {  // Contains one candle
   timestamp:number;
 }
 
-export interface TickerData { // Stores all data for one ticker
+export interface CandleData { // Stores all data for one ticker
   ticker: string;
   chartData: CandleType[] // An array of candles with timestamp
 }

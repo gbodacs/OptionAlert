@@ -1,8 +1,8 @@
-import { TickerData, CandleType } from "./CandleStoreTypes";
+import { CandleData, CandleType } from "./CandleStoreTypes";
 
 class CandleStore {
   // Stores All tickerData in an object
-  DataStore: TickerData[] = [];
+  DataStore: CandleData[] = [];
     /*{
       ticker: "A",
       chartData: [
@@ -13,7 +13,7 @@ class CandleStore {
     }, ...*/
 
   private TimestampPresent(ticker: string, timestamp: number): boolean {
-    const item: TickerData | undefined = this.GetTickerDataByTicker(ticker);
+    const item: CandleData | undefined = this.GetTickerDataByTicker(ticker);
     if (item === undefined)
       return false;
 
@@ -28,7 +28,7 @@ class CandleStore {
   }
 
   AddTickerDataByTicker(ticker: string, open: number[], close: number[], low: number[], high: number[], volume: number[], timestamp: number[]): boolean {
-    const item: TickerData | undefined = this.GetTickerDataByTicker(ticker);
+    const item: CandleData | undefined = this.GetTickerDataByTicker(ticker);
     if (item === undefined) {
       // Add new item
       // Add element to DataStore
@@ -57,7 +57,7 @@ class CandleStore {
     return true;
   }
 
-  GetTickerDataByTicker(ticker2: string): TickerData | undefined {
+  GetTickerDataByTicker(ticker2: string): CandleData | undefined {
     return this.DataStore.find((item) => ticker2 === item.ticker);
   }
 }
