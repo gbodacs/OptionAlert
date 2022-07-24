@@ -42,7 +42,7 @@ class FidelityIntraday implements Intraday {
         return res;
     },
       headers: {
-        'X-RapidAPI-Key': 'dfa5a6ee0amsh91e2a8f071665a8p155928jsn1d6b32ec48d3',
+        'X-RapidAPI-Key': 'dfa5a6ee0amsh91e2a8f071665a8p155928jsn1d6b32ec48d2',
         'X-RapidAPI-Host': 'fidelity-investments.p.rapidapi.com'
       },
     };
