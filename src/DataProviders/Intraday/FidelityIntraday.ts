@@ -5,6 +5,7 @@ import { OptionChain, OptionChainData } from "../OptionChain/OptionChain";
 import logger from "../../../utils/logger"
 import { XMLParser} from "fast-xml-parser";
 import { ServerResponse } from "http";
+import Global from "../../Global/Global";
 
 class FidelityIntraday implements Intraday {
   toFidelityTimeDateFormat(timestamp: number):string {
@@ -42,8 +43,8 @@ class FidelityIntraday implements Intraday {
         return res;
     },
       headers: {
-        'X-RapidAPI-Key': 'dfa5a6ee0amsh91e2a8f071665a8p155928jsn1d6b32ec48d2',
-        'X-RapidAPI-Host': 'fidelity-investments.p.rapidapi.com'
+        'X-RapidAPI-Key': Global.getInstance().getConstManager().getFidelityKey(),
+        'X-RapidAPI-Host': Global.getInstance().getConstManager().getFidelityHost()
       },
     };
 

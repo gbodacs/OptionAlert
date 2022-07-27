@@ -37,7 +37,7 @@ class VwapAboveStrategy extends StrategyBase {
     // Calculate VWAP
     const vwapValues: number[] = Vwap(input);
     if (vwapValues.length !== input.length) {
-      logger.warning("vwapValues calculation array size problem!")
+      logger.error("vwapValues calculation array size problem!")
     }
 
     // Check data
