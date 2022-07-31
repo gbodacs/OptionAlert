@@ -11,4 +11,4 @@ abstract class Intraday {
   abstract GetIntradayData(ticker: string, start: number, end: number): void;
 }
 
-export { Intraday, IntradayData };
+export { Intraday, type IntradayData };

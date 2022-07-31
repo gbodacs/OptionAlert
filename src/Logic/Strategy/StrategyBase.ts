@@ -1,5 +1,5 @@
 import Global from "../../Global/Global";
-import logger from "../../../utils/logger";
+import logger from "../../Utils/logger";
 
 abstract class StrategyBase {
   constructor(ticker: string) {

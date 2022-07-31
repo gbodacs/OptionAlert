@@ -2,8 +2,8 @@ import {Intraday, IntradayData} from "./Intraday";
 import axios from "axios";
 import { AxiosResponse } from "axios";
 import { OptionChain, OptionChainData } from "../OptionChain/OptionChain";
-import logger from "../../../utils/logger"
-import { XMLParser} from "fast-xml-parser";
+import logger from "../../Utils/logger"
+import { XMLParser, XMLValidator} from "fast-xml-parser";
 import { ServerResponse } from "http";
 import Global from "../../Global/Global";
 
@@ -51,6 +51,10 @@ class FidelityIntraday implements Intraday {
     try {
       const resp: AxiosResponse = await axios.request(options);
       const parser = new XMLParser();
+      const valid = XMLValidator.validate(resp.data);
+      if (valid !== true) {
+        throw new Error("Invalid XML returned from Fidelity")
+      }
       const respObj = parser.parse(resp.data);
 
       if (respObj.Chart.Symbol.Error !== undefined)
@@ -69,12 +73,12 @@ class FidelityIntraday implements Intraday {
         }
         return ret;
       };
-      throw new Error("Error: resp.status!=200 resp:" + resp.toString());
+      throw new Error("Error: Fidelity response status is not 200 - " + resp.toString());
     } catch (error) {
       let message
       if (error instanceof Error) message = error.message
       else message = String(error)
-      logger.error("Error getting chart data: " + message);
+      logger.error("Error getting Fidelity intraday chart data: " + message);
       return;
     }
   }

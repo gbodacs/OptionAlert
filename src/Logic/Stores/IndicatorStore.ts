@@ -40,7 +40,7 @@ class IndicatorStore {
     } else {
       // Ticker already present, add new data to it
       const indData: IndicatorType[] = item.dataValues;
-      for (let i = 0; i < open.length; i++) {
+      for (let i = 0; i < timestamp.length; i++) {
         if (this.TimestampPresent(tickerName, indicatorName, timestamp[i]))
           continue;
 

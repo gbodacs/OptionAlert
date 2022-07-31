@@ -1,6 +1,6 @@
 import StrategyBase from "./StrategyBase";
 import Global from "../../Global/Global";
-import logger from "../../../utils/logger";
+import logger from "../../Utils/logger";
 import {Vwap, VwapInput} from "../../Indicators/vwap"
 
 

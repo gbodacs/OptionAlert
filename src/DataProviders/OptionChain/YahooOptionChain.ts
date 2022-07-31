@@ -1,6 +1,6 @@
 import axios from "axios";
 import { AxiosResponse } from "axios";
-import logger from "../../../utils/logger";
+import logger from "../../Utils/logger";
 import { OptionChain, OptionChainData } from "./OptionChain";
 
 class YahooOptionChain implements OptionChain {
@@ -8,7 +8,13 @@ class YahooOptionChain implements OptionChain {
     const options = {
       method: "GET",
       url: "https://query1.finance.yahoo.com/v7/finance/options/" + ticker,
+      headers: { 
+        'Access-Control-Allow-Origin' : '*',
+        'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+      },
     };
+
+    logger.info(JSON.stringify(options));
 
     try {
       const resp: AxiosResponse = await axios.request(options);
@@ -30,8 +36,8 @@ class YahooOptionChain implements OptionChain {
           strikes: resp.data.optionChain.result[0].strikes,
           calls: resp.data.optionChain.result[0].options[0].calls,
           puts: resp.data.optionChain.result[0].options[0].puts,
+          
         };
-
         return ret;
       } else {
         throw new Error("Error: resp.status!=200 resp:" + resp.toString());

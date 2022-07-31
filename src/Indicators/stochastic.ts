@@ -27,4 +27,4 @@ async function SlowStochastic(dataSeries:number) {/*
   }*/
 }
 
-module.exports = { SlowStochastic };
+export { SlowStochastic };

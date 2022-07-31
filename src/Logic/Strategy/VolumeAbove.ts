@@ -1,6 +1,6 @@
 import StrategyBase from "./StrategyBase";
 import Global from "../../Global/Global";
-import logger from "../../../utils/logger";
+import logger from "../../Utils/logger";
 
 // Volume on the 1 min chart is over "x"
 class VolumeAboveStrategy extends StrategyBase {

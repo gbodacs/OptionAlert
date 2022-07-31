@@ -1,24 +1,18 @@
-import { createLogger, transports, format, Logger } from "winston";
-import DailyRotateFile from "winston-daily-rotate-file";
+class Logger {
+  info(text: string) {
+    console.log("INFO: "+text);
+  }
 
-const rotateTransport = new DailyRotateFile({
-  filename: "application-%DATE%.log",
-  datePattern: "YYYY-MM-DD_HH-mm",
-  zippedArchive: true,
-  maxSize: "20m",
-  maxFiles: "14d",
-});
+  warning(text: string) {
+    console.log("Warning: "+text);
+  }
 
-const logger: Logger = createLogger({
-  transports: [new transports.Console(), rotateTransport],
-  format: format.combine(
-    format.timestamp(),
-    format.splat(),
-    format.printf(({ timestamp, level, message }) => {
-      return `[${timestamp}] ${level}: ${message}`;
-    })
-  ),
-});
+  error(text: string) {
+    console.log("Error: "+text);
+  }
+}
+
+const logger: Logger = new Logger();
 
 // ************
 // ** Usage: **

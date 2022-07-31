@@ -2,7 +2,7 @@ import {Intraday, IntradayData} from "./Intraday";
 import axios from "axios";
 import { AxiosResponse } from "axios";
 import { OptionChain, OptionChainData } from "../OptionChain/OptionChain";
-import logger from "../../../utils/logger"
+import logger from "../../Utils/logger"
 
 class YahooIntraday implements Intraday {
   toTimestamp(strDate: string):string {

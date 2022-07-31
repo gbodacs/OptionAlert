@@ -2,35 +2,7 @@ import { TickerData, CandleType } from "./CandleStore.d";
 
 class CandleStore {
   // Stores All tickerData in an object
-  DataStore: TickerData[] = [
-    {
-      ticker: "A",
-      chartData: [
-        { open: 0.1, close: 0.2, low: 0.02, high: 0.3, volume: 10, timestamp: 11 },
-        { open: 0.1, close: 0.2, low: 0.02, high: 0.3, volume: 10, timestamp: 11 },
-        { open: 0.1, close: 0.2, low: 0.02, high: 0.3, volume: 10, timestamp: 11 },
-      ],
-    },
-    {
-      ticker: "B",
-      chartData: [
-        { open: 0.1, close: 0.2, low: 0.02, high: 0.3, volume: 10, timestamp: 11 },
-        { open: 0.1, close: 0.2, low: 0.02, high: 0.3, volume: 10, timestamp: 11 },
-        { open: 0.1, close: 0.2, low: 0.02, high: 0.3, volume: 10, timestamp: 11 },
-      ],
-    },
-  ];
-
-  /*private _MergeTickerData(store: TickerData, add: TickerData) {
-    const list = Object.keys(add.chartData);
-    list.forEach((element) => {
-      const item = store.chartData[+element];
-      if (item === undefined) {
-        // Add candle and store
-        store.chartData[+element] = add.chartData[+element];
-      }
-    });
-  }*/
+  DataStore: TickerData[] = [];
 
   private TimestampPresent(ticker: string, timestamp: number): boolean {
     const item: TickerData | undefined = this.GetTickerDataByTicker(ticker);

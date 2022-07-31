@@ -1,4 +1,4 @@
-import logger from "../../utils/logger";
+import logger from "../Utils/logger";
 
 class AlertManager {
   email: boolean = false;
