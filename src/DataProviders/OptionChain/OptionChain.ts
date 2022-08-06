@@ -1,12 +1,16 @@
+export interface OptionInfo {
+  ask: number;
+  bid:number;
+  contractSymbol: string;
+  impliedVolatility: number;
+  lastPrice: number;
+  strike: number;
+  volume: number;
+}
+
 export interface OptionChainData {
-  underlyingSymbol: string;
-  underlyingLongName?: string;
-  underlyingBid: number;
-  underlyingAsk: number;
-  calls: string[];
-  puts: string[];
-  expirationDates: number[];
-  strikes: number[];
+  calls: OptionInfo[];
+  puts: OptionInfo[];
 };
 
 export abstract class OptionChain {

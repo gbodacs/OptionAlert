@@ -5,6 +5,7 @@ import YahooIntraday from "../../DataProviders/Intraday/YahooIntraday";
 import FidelityIntraday from "../../DataProviders/Intraday/FidelityIntraday";
 
 import { getCurrTimeEST } from "../../Utils/timedate";
+import { OptionChainData } from "../../DataProviders/OptionChain/OptionChain";
 
 class TickerManager {
   /* Ticker stores */
@@ -24,13 +25,12 @@ class TickerManager {
     this.lastGetTime = tempDate.getTime() / 1000; // Set start time to today - 9:00am
   }
 
-  async getOptionChain(ticker: string): Promise<object | undefined> {
+  async getOptionChain(ticker: string): Promise<OptionChainData | undefined> {
     /* Get Option Chain */
     const optionChain = await this.optionChain.GetOptionChainElements(ticker);
     if (optionChain === undefined) {
       return undefined;
     }
-
     return optionChain;
   }
 

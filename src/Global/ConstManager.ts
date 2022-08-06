@@ -6,10 +6,16 @@ export default class ConstManager {
   private fidelityKey = "xxxxx"
   private fidelityHost = "xxxxx"
 
+  private yahooKey = "xxxxx"
+  private yahooHost = "xxxxx"
+
   public getVolumeMin(): number {return this.volumeMin;}
 
   public getStochasticUnder(): number {return this.stochasticUnder;}
 
   public getFidelityKey(): string {return this.fidelityKey;}
   public getFidelityHost(): string {return this.fidelityHost;}
+
+  public getYahooKey(): string {return this.yahooKey;}
+  public getYahooHost(): string {return this.yahooHost;}
 }
