@@ -6,23 +6,23 @@ import NavBar from "./Ui/components/layout/NavBar";
 import About from "./Ui/pages/About";
 import Home from "./Ui/pages/Home";
 import NotFound from "./Ui/pages/NotFound";
+import Settings from "./Ui/pages/Settings";
 
 function App() {
   return (
         <Router>
-          <div className="flex flex-col justify-between h-screen">
+          <div className="flex flex-col justify-between">
             <NavBar title="Option Alert" />
 
             <main className="container mx-auto px-3 pb-12">
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/about" element={<About />} />
+                <Route path="/settings" element={<Settings />} />
                 <Route path="/notfound" element={<NotFound />} />
                 <Route path="/*" element={<NotFound />} />
               </Routes>
             </main>
-
-            <Footer />
           </div>
         </Router>
   );

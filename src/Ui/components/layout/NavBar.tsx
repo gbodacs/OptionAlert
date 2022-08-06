@@ -1,5 +1,6 @@
 import { FunctionComponent, useEffect, useState } from "react";
 import { FaFileAlt } from "react-icons/fa";
+import {FaRegSun, FaHome} from 'react-icons/fa'
 import { Link } from "react-router-dom";
 import Spinner from "./Spinner";
 
@@ -17,15 +18,18 @@ const NavBar: FunctionComponent<NavBarProps> = ({ title }: NavBarProps) => {
             {title}
           </Link>
         </div>
-        <div className="flex-1 px-2 mx-2">
-          <div className="flex justify-end">
+        <div className="flex-none px-1 mx-1 justify-end">
             <Link to="/" className="btn btn-ghost btn-sm rounded-btn">
-              Home
+              <FaHome className="inline text-2xl"/>
+            </Link>
+            <Link to="/settings" className="btn btn-ghost btn-sm rounded-btn">
+              <FaRegSun className="inline text-2xl"/>
             </Link>
             <Link to="/about" className="btn btn-ghost btn-sm rounded-btn">
               About
             </Link>
-          </div>
+            
+
         </div>
       </div>
     </nav>

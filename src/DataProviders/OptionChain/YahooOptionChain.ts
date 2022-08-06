@@ -39,7 +39,7 @@ class YahooOptionChain implements OptionChain {
       let message;
       if (error instanceof Error) message = error.message;
       else message = String(error);
-      logger.error("Error getting option chain:" + message);
+      logger.error("Error getting Yahoo option chain:" + message);
       return undefined;
     }
   }
