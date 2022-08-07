@@ -2,6 +2,7 @@
 export default class ConstManager {
   private volumeMin = 1000;
   private stochasticUnder = 20;
+  private refreshInterval = 20;
 //
   private fidelityKey = "xxxxx"
   private fidelityHost = "xxxxx"
@@ -10,6 +11,8 @@ export default class ConstManager {
   private yahooHost = "xxxxx"
 
   public getVolumeMin(): number {return this.volumeMin;}
+
+  public getRefreshInterval(): number {return this.refreshInterval;}
 
   public getStochasticUnder(): number {return this.stochasticUnder;}
 

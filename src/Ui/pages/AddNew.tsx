@@ -1,25 +1,31 @@
-import axios, { AxiosError } from "axios";
 import React from "react";
 import { useEffect, useState } from "react";
 import { OptionInfo } from "../../DataProviders/OptionChain/OptionChain";
 import Global from "../../Global/Global";
 import logger from "../../Utils/logger";
+import {toast} from "react-toastify"
+import closeDropDown from "../../Utils/closedropdown";
 //import ListViewBasic from "../components/ListViewBasic"
 
-function Home() {
+function AddNew() {
   const [ticker, setTicker] = useState<string>("");
   const [option, setOption] = useState<string>("");
   const [callChain, setCallChain] = useState<OptionInfo[]>([]);
   const [putChain, setPutChain] = useState<OptionInfo[]>([]);
 
+  useEffect( () => {
+    closeDropDown();
+  }, [])
+
   const handleTickerChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTicker(e.target.value);
+    setTicker(e.target.value.toUpperCase());
   };
 
   const addButtonHandler = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
 
-    
+    Global.getInstance().getStrategyManager().AddVolumeAboveStrategy(ticker, option);
+    toast.info(option+" Added")
   }
 
   const tickerButtonHandler = async (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -29,10 +35,10 @@ function Home() {
     setPutChain([])
     setOption("")
 
-    const ret = await Global.getInstance().getTickerManager().getOptionChain(ticker);
+    const ret = await Global.getInstance().getStrategyManager().getTickerManager().getOptionChain(ticker);
     if (ret === undefined) {
-      logger.error("Cannot get option chain!");
-      // todo: Alert(
+      logger.error("Unable to download option chain!");
+      toast.error("Unable to download option chain!")
       return;
     }
 
@@ -60,11 +66,9 @@ function Home() {
     event.preventDefault();
 
     const i = event.currentTarget.value;
-    setOption(callChain[i].contractSymbol)
+    setOption(putChain[i].contractSymbol)
 
-    if (document!==null) { // Close the UL list
-      if (document.activeElement != document.body) (document.activeElement as HTMLElement).blur();
-    }
+    closeDropDown();
   };
 
   const handleCallSelect = (event: React.MouseEvent<HTMLLIElement>) => {
@@ -73,9 +77,7 @@ function Home() {
     const i = event.currentTarget.value;
     setOption(callChain[i].contractSymbol)
 
-    if (document!==null) { // Close the UL list
-      if (document.activeElement != document.body) (document.activeElement as HTMLElement).blur();
-    }
+    closeDropDown();
   };
 
   const renderOptions:boolean = (putChain.length>0 && callChain.length>0);
@@ -128,15 +130,15 @@ function Home() {
             </div>
           </div>)}
 
-          {renderStrategy && (
+          {renderStrategy /*todo add strategy list */ && (
             <div>
             <h1 className="text-2xl m-4">Select strategy</h1>
             <div className="grid grid-cols-1 xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 mb-8 gap-8">
               <div className="relative">
               <select className="select w-full max-w-lg bg-base-300">
-                <option selected>Josh SPY option volume</option>
-                <option disabled>Josh other strategy</option>
-                <option disabled>Josh another strategy</option>
+                <option selected>Option volume spike</option>
+                <option disabled>VWAP under 20</option>
+                <option disabled>Another strategy</option>
               </select>
               </div>
             </div>
@@ -147,4 +149,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default AddNew;

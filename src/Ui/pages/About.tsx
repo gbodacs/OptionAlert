@@ -1,6 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
+import closeDropDown from "../../Utils/closedropdown";
 
 export default function About() {
+  useEffect( () => {
+    closeDropDown();
+  }, [])
+  
   return (
     <div>
       <h1 className="text-6xl mb-4">Option Alert</h1>

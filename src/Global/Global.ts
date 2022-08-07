@@ -2,7 +2,7 @@ import CandleStore from "../Logic/Stores/CandleStore";
 import IndicatorStore from "../Logic/Stores/IndicatorStore";
 import AlertManager from "../Alert/AlertManager";
 import ConstManager from "./ConstManager"
-import TickerManager from "../Logic/TickerManager/TickerManager";
+import StrategyManager from "../Logic/TickerManager/StrategyManager";
 
 
 export default class Global {
@@ -11,21 +11,20 @@ export default class Global {
   private indicatorStore: IndicatorStore;
   private alertManager: AlertManager;
   private constManager: ConstManager;
-  private tickerManager: TickerManager;
+  private strategyManager: StrategyManager;
 
   private constructor() {
     this.candleStore = new CandleStore();
     this.indicatorStore = new IndicatorStore();
     this.alertManager = new AlertManager();
     this.constManager = new ConstManager();
-    this.tickerManager = new TickerManager();
+    this.strategyManager = new StrategyManager();
   }
 
   public static getInstance(): Global { // For singleton behavior
       if (!Global.instance) {
         Global.instance = new Global();
       }
-
       return Global.instance;
   }
 
@@ -33,5 +32,5 @@ export default class Global {
   public getCandleStore() {return this.candleStore;}
   public getIndicatorStore() {return this.indicatorStore;}
   public getAlertManager() {return this.alertManager;}
-  public getTickerManager() {return this.tickerManager;}
+  public getStrategyManager() {return this.strategyManager;}
 }

@@ -7,13 +7,13 @@ import {Vwap, VwapInput} from "../../Indicators/vwap"
 // Current Option price is below VWAP.
 
 class VwapAboveStrategy extends StrategyBase {
-  constructor(ticker: string) {
-    super(ticker);
+  constructor(optionTicker: string, underlyingTicker:string) {
+    super(optionTicker, underlyingTicker, "Josh VWAP under");
   }
 
   Tick():void {
     // Get chart data from store
-    const item = Global.getInstance().getCandleStore().GetTickerDataByTicker(this.ticker);
+    const item = Global.getInstance().getCandleStore().GetTickerDataByTicker(this.getOptionTicker());
     if (item === undefined) {
       logger.error("VwapAboveStrategy.Tick() cannot get data")
       return;

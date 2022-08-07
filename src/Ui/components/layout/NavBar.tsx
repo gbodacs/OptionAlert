@@ -1,6 +1,6 @@
 import { FunctionComponent, useEffect, useState } from "react";
-import { FaFileAlt } from "react-icons/fa";
-import {FaRegSun, FaHome} from 'react-icons/fa'
+import { FaBars, FaFileAlt, FaList, FaPlus } from "react-icons/fa";
+import { FaRegSun } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import Spinner from "./Spinner";
 
@@ -18,18 +18,26 @@ const NavBar: FunctionComponent<NavBarProps> = ({ title }: NavBarProps) => {
             {title}
           </Link>
         </div>
-        <div className="flex-none px-1 mx-1 justify-end">
-            <Link to="/" className="btn btn-ghost btn-sm rounded-btn">
-              <FaHome className="inline text-2xl"/>
-            </Link>
-            <Link to="/settings" className="btn btn-ghost btn-sm rounded-btn">
-              <FaRegSun className="inline text-2xl"/>
-            </Link>
-            <Link to="/about" className="btn btn-ghost btn-sm rounded-btn">
-              About
-            </Link>
-            
-
+        <div className="flex-1 px-1 mx-1 ">
+          <div className="flex justify-end">
+            <div className="dropdown dropdown-end">
+              <label tabIndex={0} className="btn btn-ghost rounded-btn"><FaBars className="inline pr-3 text-3xl" />Menu</label>
+              <ul tabIndex={0} className="menu dropdown-content p-2 shadow bg-base-300 rounded-box w-52 mt-4">
+                <li>
+                  <Link to="/" className="btn btn-ghost btn-sm rounded-btn justify-start">Add new</Link>
+                </li>
+                <li>
+                  <Link to="/alertlist" className="btn btn-ghost btn-sm rounded-btn justify-start">Alert List</Link>
+                </li>
+                <li>
+                  <Link to="/settings" className="btn btn-ghost btn-sm rounded-btn justify-start">Settings</Link>
+                </li>
+                <li>
+                  <Link to="/about" className="btn btn-ghost btn-sm rounded-btn justify-start">About</Link>
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
     </nav>

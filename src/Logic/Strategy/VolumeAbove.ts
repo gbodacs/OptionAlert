@@ -4,13 +4,13 @@ import logger from "../../Utils/logger";
 
 // Volume on the 1 min chart is over "x"
 class VolumeAboveStrategy extends StrategyBase {
-  constructor(ticker: string) {
-    super(ticker);
+  constructor(optionTicker: string, underlyingTicker:string) {
+    super(optionTicker, underlyingTicker, "Option volume spike");
   }
 
   Tick(): void {
     // Get data from store
-    const item = Global.getInstance().getCandleStore().GetTickerDataByTicker(this.ticker);
+    const item = Global.getInstance().getCandleStore().GetTickerDataByTicker(this.getOptionTicker());
     if (item === undefined) {
       logger.error("VolumeAboveStrategy.Tick() cannot get data");
       return;

@@ -1,7 +1,13 @@
+import { useEffect } from 'react';
 import {FaHome} from 'react-icons/fa'
 import {Link} from 'react-router-dom'
+import closeDropDown from '../../Utils/closedropdown';
 
 export default function NotFound() {
+  useEffect( () => {
+    closeDropDown();
+  }, [])
+  
   return (
     <div className='hero'>
       <div className='text-center hero-content'>
