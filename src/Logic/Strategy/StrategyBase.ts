@@ -10,7 +10,7 @@ abstract class StrategyBase {
     return
   }
 
-  private strategyName: string;
+  protected strategyName: string;
   private underlyingTicker: string;
   private optionTicker: string;
   protected lastTimestamp: number;
@@ -26,7 +26,7 @@ abstract class StrategyBase {
     // get data from store
     const item = Global.getInstance().getCandleStore().GetTickerDataByTicker(this.optionTicker);
     if (item === undefined) {
-      logger.error("VolumeAboveStrategy.Tick() cannot get data");
+      logger.error("FindFistNewCandleIndex cannot get data");
       return -1;
     }
 

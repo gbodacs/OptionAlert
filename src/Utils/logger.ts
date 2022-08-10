@@ -8,7 +8,7 @@ class Logger {
   }
 
   error(text: string) {
-    console.log("Error: "+text);
+    console.log("ERROR: "+text);
   }
 }
 

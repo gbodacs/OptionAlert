@@ -16,7 +16,7 @@ export default class Global {
   private constructor() {
     this.candleStore = new CandleStore();
     this.indicatorStore = new IndicatorStore();
-    this.alertManager = new AlertManager();
+    this.alertManager = new AlertManager(false, true, true);
     this.constManager = new ConstManager();
     this.strategyManager = new StrategyManager();
   }

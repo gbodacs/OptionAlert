@@ -30,6 +30,9 @@ const NavBar: FunctionComponent<NavBarProps> = ({ title }: NavBarProps) => {
                   <Link to="/alertlist" className="btn btn-ghost btn-sm rounded-btn justify-start">Alert List</Link>
                 </li>
                 <li>
+                  <Link to="/watchlist" className="btn btn-ghost btn-sm rounded-btn justify-start">Watchlist</Link>
+                </li>
+                <li>
                   <Link to="/settings" className="btn btn-ghost btn-sm rounded-btn justify-start">Settings</Link>
                 </li>
                 <li>

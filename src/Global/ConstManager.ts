@@ -2,7 +2,8 @@
 export default class ConstManager {
   private volumeMin = 1000;
   private stochasticUnder = 20;
-  private refreshInterval = 20;
+  private optionChainLength = 10;
+  private refreshInterval = 10000; // 20 sec refresh
 //
   private fidelityKey = "xxxxx"
   private fidelityHost = "xxxxx"
@@ -14,6 +15,7 @@ export default class ConstManager {
 
   public getRefreshInterval(): number {return this.refreshInterval;}
 
+  public getOptionChainLength(): number {return this.optionChainLength;}
   public getStochasticUnder(): number {return this.stochasticUnder;}
 
   public getFidelityKey(): string {return this.fidelityKey;}

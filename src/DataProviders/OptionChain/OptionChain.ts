@@ -6,6 +6,7 @@ export interface OptionInfo {
   lastPrice: number;
   strike: number;
   volume: number;
+  inTheMoney: boolean;
 }
 
 export interface OptionChainData {

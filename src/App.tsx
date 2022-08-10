@@ -9,6 +9,7 @@ import About from "./Ui/pages/About";
 import AddNew from "./Ui/pages/AddNew";
 import NotFound from "./Ui/pages/NotFound";
 import Settings from "./Ui/pages/Settings";
+import WatchList from "./Ui/pages/WatchList";
 import AlertList from "./Ui/pages/AlertList";
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
                   <Route path="/" element={<AddNew />} />
                   <Route path="/about" element={<About />} />
                   <Route path="/settings" element={<Settings />} />
+                  <Route path="/watchlist" element={<WatchList />} />
                   <Route path="/alertlist" element={<AlertList />} />
                   <Route path="/notfound" element={<NotFound />} />
                   <Route path="/*" element={<NotFound />} />

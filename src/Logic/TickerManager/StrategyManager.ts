@@ -26,6 +26,7 @@ class StrategyManager {
   }
 
   public Tick() {
+    console.log("StrategyManager::Tick() called!")
     this.tickerManager.Tick();
 
     this.strategies.forEach((elem) => elem.Tick());

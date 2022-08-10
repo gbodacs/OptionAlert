@@ -37,28 +37,32 @@ class TickerManager {
   AddTicker(t: string): void {
     if (this.Tickers.indexOf(t) === -1) {
       this.Tickers.push(t);
+      logger.info("Ticker added:"+t)
     }
   }
 
   AddOptionTicker(t: string): void {
     if (this.OptionTickers.indexOf(t) === -1) {
       this.OptionTickers.push(t);
-    } // todo: add automatic AddTicker() from first 3 chars
+      logger.info("OptionTicker added:"+t)
+    } // todo: add automatic AddTicker() from first 3-4-5 chars
   }
 
   async ApiCallTick(ticker: string, currTime: number) {
     /* Get Intraday info */
+    logger.info("APICallTick with:"+ticker)
     const intraDay = await this.optionIntraday.GetIntradayData(ticker, this.lastGetTime, currTime);
     if (intraDay === undefined) {
-      logger.error("Intraday response is empty.");
+      logger.error("TickerManager-Intraday response is empty:"+ticker);
       return;
     }
 
     if (intraDay.timestamp === undefined) {
-      logger.error("Could not get intraday chart data - market closed?");
+      logger.error("TickerManager-Could not get intraday chart data - market closed?");
       return; // todo market closed? report fail
     }
 
+    logger.info("TickerManager- Data downloaded successfully, adding to the store:"+ticker)
     Global.getInstance().getCandleStore().AddTickerDataByTicker(ticker, intraDay.open,intraDay.close,intraDay.low,intraDay.high,intraDay.volume,intraDay.timestamp );
   }
 

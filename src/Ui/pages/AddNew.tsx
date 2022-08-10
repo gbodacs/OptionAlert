@@ -5,7 +5,6 @@ import Global from "../../Global/Global";
 import logger from "../../Utils/logger";
 import {toast} from "react-toastify"
 import closeDropDown from "../../Utils/closedropdown";
-//import ListViewBasic from "../components/ListViewBasic"
 
 function AddNew() {
   const [ticker, setTicker] = useState<string>("");
@@ -28,6 +27,30 @@ function AddNew() {
     toast.info(option+" Added")
   }
 
+  const searchCallInTheMoneyIndex = (calls: OptionInfo[]): number => {
+    for(let i=0; i<calls.length; i++) {
+      if (calls[i].inTheMoney===false) { 
+        i = i-Global.getInstance().getConstManager().getOptionChainLength()/2;
+        if (i<0) i=0;
+        return i;
+      }
+    }
+
+    return Math.round(calls.length/2);
+  }
+
+  const searchPutInTheMoneyIndex = (puts: OptionInfo[]): number => {
+    for(let i=0; i<puts.length; i++) {
+      if (puts[i].inTheMoney===true) { 
+        i = i-Global.getInstance().getConstManager().getOptionChainLength()/2;
+        if (i<0) i=0;
+        return i;
+      }
+    }
+
+    return Math.round(puts.length/2);
+  }
+
   const tickerButtonHandler = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
 
@@ -42,24 +65,23 @@ function AddNew() {
       return;
     }
 
-    ret.calls = ret.calls.filter((item, index) => {
-      if (index > ret.calls.length * 0.45 && index < ret.calls.length * 0.55) {
-        return true;
-      } else {
-        return false;
-      }
-    });
+    const callIndex = searchCallInTheMoneyIndex(ret.calls);
+    const putIndex = searchPutInTheMoneyIndex(ret.puts);
+    const calls:OptionInfo[] = [];
+    const puts:OptionInfo[] = [];
+    
+    for (let i=callIndex; i<callIndex+Global.getInstance().getConstManager().getOptionChainLength(); i++) {
+      if (i<ret.calls.length)
+        calls.push(ret.calls[i])
+    }
 
-    ret.puts = ret.puts.filter((item, index) => {
-      if (index > ret.puts.length * 0.45 && index < ret.puts.length * 0.55) {
-        return true;
-      } else {
-        return false;
-      }
-    });
-
-    setCallChain(ret.calls);
-    setPutChain(ret.puts);
+    for (let i=putIndex; i<putIndex+Global.getInstance().getConstManager().getOptionChainLength(); i++) {
+      if (i<ret.puts.length)
+        puts.push(ret.puts[i])
+    }
+debugger
+    setCallChain(calls);
+    setPutChain(puts);
   };
 
   const handlePutSelect = (event: React.MouseEvent<HTMLLIElement>) => {
