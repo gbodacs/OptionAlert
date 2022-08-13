@@ -11,9 +11,18 @@ import { FaRecycle, FaTrash } from "react-icons/fa";
 function AlertList() {
   const [ticker, setTicker] = useState<string>("");
 
+  const tick = () => {
+    logger.info("--- AlertList::tick called()!")
+    Global.getInstance().getStrategyManager().Tick();
+
+    setTimeout(() => {
+      tick();
+    }, Global.getInstance().getConstManager().getRefreshInterval());
+  }
+
   useEffect(() => {
     closeDropDown();
-    Global.getInstance().getStrategyManager().Tick(); // Start the timer here!
+    tick(); // Start the timer here!
   }, []);
 
   const deleteButtonHandler = async (event: React.MouseEvent<HTMLButtonElement>) => {

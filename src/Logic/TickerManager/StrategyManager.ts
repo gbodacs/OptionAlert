@@ -1,4 +1,3 @@
-import Global from "../../Global/Global";
 import logger from "../../Utils/logger";
 import StrategyBase from "../Strategy/StrategyBase";
 import VolumeAboveStrategy from "../Strategy/VolumeAbove";
@@ -30,10 +29,6 @@ class StrategyManager {
     this.tickerManager.Tick();
 
     this.strategies.forEach((elem) => elem.Tick());
-
-    setTimeout(() => {
-      this.Tick();
-    }, Global.getInstance().getConstManager().getRefreshInterval());
   }
 }
 

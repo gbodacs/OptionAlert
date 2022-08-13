@@ -1,8 +1,18 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import closeDropDown from "../../Utils/closedropdown";
 
 export default function Settings() {
+  const [fidelityKey, setFidelityKey] = useState<string>("");
+  const [fidelityHost, setFidelityHost] = useState<string>("");
+  const [yahooKey, setYahooKey] = useState<string>("");
+  const [yahooHost, setYahooHost] = useState<string>("");
+
+  const [volumeAlertValue, setVolumeAlertValue] = useState<number>(1000);
+  const [stochasticAlertValue, setStochasticAlertValue] = useState<number>(20);
+  const [optionChainLength, setOptionChainLength] = useState<number>(10);
+  const [refreshInterval, setRefreshInterval] = useState<number>(10000);
+
   useEffect(() => {
     closeDropDown();
   }, []);
