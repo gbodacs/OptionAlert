@@ -40,9 +40,9 @@ class FidelityIntraday implements Intraday {
       if (lastChar === -1) return ""; // non-put and non-call?
 
       let ret1 = ticker.slice(0, lastChar+1);
-      let ret2 = ticker.slice(lastChar+3, ticker.length - 3);
+      let ret2 = +ticker.slice(lastChar+1, ticker.length - 3);
 
-      return "-" + ret1 + ret2;
+      return "-" + ret1 + ret2.toString();
     } else {
       // probably a non-option ticker?
       return ticker;
