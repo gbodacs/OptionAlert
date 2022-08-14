@@ -1,5 +1,6 @@
 import { timeStamp } from "console";
 import logger from "../Utils/logger";
+import { getUnderlyingTickerFromOptionsTicker } from "../Utils/timedate";
 import AlertItem from "./AlertItem";
 
 class AlertManager {
@@ -36,7 +37,8 @@ class AlertManager {
     return false;
   }
 
-  public Alert(underlyingTicker: string, optionTicker: string, strategy: string, timestamp:number, text: string) {
+  public Alert(optionTicker: string, strategy: string, timestamp:number, text: string) {
+    const underlyingTicker = getUnderlyingTickerFromOptionsTicker(optionTicker);
     if (! this.AddItemToList(underlyingTicker, optionTicker, strategy, timestamp, text) )
       return; // Already added to the list
 

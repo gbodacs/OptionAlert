@@ -5,8 +5,8 @@ import { getTimestampStringEST } from "../../Utils/timedate";
 
 // Volume on the 1 min chart is over "x"
 class VolumeAboveStrategy extends StrategyBase {
-  constructor(optionTicker: string, underlyingTicker:string) {
-    super(optionTicker, underlyingTicker, "Option volume spike");
+  constructor(optionTicker: string) {
+    super(optionTicker, "Option volume spike");
   }
 
   Tick(): void {
@@ -26,13 +26,12 @@ class VolumeAboveStrategy extends StrategyBase {
 
     // Check data
     const chartData = item.chartData;
-    const minVol = Global.getInstance().getConstManager().getVolumeMin()
+    const minVol = Global.getInstance().getConstManager().getVolumeAlertValue()
     for (let i=startIndex; i<chartData.length; i++) {
       const elem = chartData[i]
       if (elem.volume > minVol) {
 
         Global.getInstance().getAlertManager().Alert(
-          item.ticker.slice(0,2),
           item.ticker,
           this.strategyName,
           elem.timestamp,

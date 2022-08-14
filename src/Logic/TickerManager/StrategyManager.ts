@@ -10,10 +10,9 @@ class StrategyManager {
   /* Ticker and options ticker manager */
   private tickerManager = new TickerManager();
 
-  public AddVolumeAboveStrategy(underlying: string, option: string) {
-    this.tickerManager.AddTicker(underlying);
-    this.tickerManager.AddOptionTicker(option);
-    this.strategies.push(new VolumeAboveStrategy(option, underlying));
+  public AddVolumeAboveStrategy(optionTicker: string) {
+    this.tickerManager.AddOptionTicker(optionTicker);
+    this.strategies.push(new VolumeAboveStrategy(optionTicker));
   }
 
   public getStrategy() {

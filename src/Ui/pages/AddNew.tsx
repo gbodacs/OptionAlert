@@ -23,7 +23,7 @@ function AddNew() {
   const addButtonHandler = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
 
-    Global.getInstance().getStrategyManager().AddVolumeAboveStrategy(ticker, option);
+    Global.getInstance().getStrategyManager().AddVolumeAboveStrategy(option);
     toast.info(option+" Added")
   }
 

@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import Global from "../../Global/Global";
+import VolumeAboveStrategy from "../../Logic/Strategy/VolumeAbove";
 import closeDropDown from "../../Utils/closedropdown";
 
 export default function Settings() {
@@ -7,31 +10,159 @@ export default function Settings() {
   const [fidelityHost, setFidelityHost] = useState<string>("");
   const [yahooKey, setYahooKey] = useState<string>("");
   const [yahooHost, setYahooHost] = useState<string>("");
+  const [optionChainLength, setOptionChainLength] = useState<number>(0);
+  const [refreshInterval, setRefreshInterval] = useState<number>(0);
 
-  const [volumeAlertValue, setVolumeAlertValue] = useState<number>(1000);
-  const [stochasticAlertValue, setStochasticAlertValue] = useState<number>(20);
-  const [optionChainLength, setOptionChainLength] = useState<number>(10);
-  const [refreshInterval, setRefreshInterval] = useState<number>(10000);
+  const [volumeAlertValue, setVolumeAlertValue] = useState<number>(0);
+  const [stochasticAlertValue, setStochasticAlertValue] = useState<number>(0);
+
 
   useEffect(() => {
     closeDropDown();
+    loadData();
   }, []);
+
+  const saveButtonHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+
+    Global.getInstance().getConstManager().setFidelityHost(fidelityHost)
+    Global.getInstance().getConstManager().setFidelityKey(fidelityKey)
+    Global.getInstance().getConstManager().setYahooHost(yahooHost)
+    Global.getInstance().getConstManager().setYahooKey(yahooKey)
+
+    Global.getInstance().getConstManager().setOptionChainLength(optionChainLength)
+    Global.getInstance().getConstManager().setRefreshInterval(refreshInterval*1000)
+
+    Global.getInstance().getConstManager().setVolumeAlertValue(volumeAlertValue)
+    Global.getInstance().getConstManager().setStochasticAlertValue(stochasticAlertValue)
+
+    Global.getInstance().getConstManager().Backup()
+
+    toast.info("Settings saved successfully.")
+  }
+
+  const loadButtonHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+
+    loadData()
+
+    toast.info("Settings loaded successfully.")
+  }
+
+  const loadData = () => {
+    Global.getInstance().getConstManager().Restore()
+
+    setFidelityHost(Global.getInstance().getConstManager().getFidelityHost())
+    setFidelityKey(Global.getInstance().getConstManager().getFidelityKey())
+    setYahooHost(Global.getInstance().getConstManager().getYahooHost())
+    setYahooKey(Global.getInstance().getConstManager().getYahooKey())
+
+    setOptionChainLength(Global.getInstance().getConstManager().getOptionChainLength())
+    setRefreshInterval(Global.getInstance().getConstManager().getRefreshInterval()/1000)
+
+    setVolumeAlertValue(Global.getInstance().getConstManager().getVolumeAlertValue())
+    setStochasticAlertValue(Global.getInstance().getConstManager().getStochasticAlertValue())
+  }
+
+  const fidelityKeyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFidelityKey(e.target.value);
+  };
+
+  const fidelityHostChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFidelityHost(e.target.value);
+  };
+
+  const yahooKeyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setYahooKey(e.target.value);
+  };
+
+  const yahooHostChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setYahooHost(e.target.value);
+  };
+
+  const optionChainLengthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let value = +e.target.value;
+    if (value<6)
+      value = 6;
+    setOptionChainLength( value );
+  };
+
+  const refreshIntervalChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let interval = +e.target.value
+    if (interval<1)
+      interval = 1;
+    if (interval>60*60)
+      interval = 60*60;
+
+    setRefreshInterval( interval );
+  };
+
+  const volumeAlertValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let interval = +e.target.value
+    if (interval<1)
+      interval = 1;
+
+    setVolumeAlertValue( interval );
+  };
+
+  const stochasticAlertValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let interval = +e.target.value
+    if (interval<1)
+      interval = 1;
+    if (interval>99)
+      interval = 99
+    setStochasticAlertValue( interval );
+  };
 
   return (
     <>
-      <h1 className="text-2xl m-4">Settings</h1>
+    <h1 className="text-2xl m-4">Global Settings</h1>
 
-      <div className="hero">
-        <div className="text-center hero-content">
-          <div className="max-w-lg">
-            <h3 className="text-3xl font-bold mb-8">Settings page</h3>
-            <p className="text-5xl mb-8">Settings placeholder</p>
-            <Link to="/alertlist" className="btn btn-primary btn-lg">
-              Back to the Watch List
-            </Link>
-          </div>
-        </div>
-      </div>
+    <table className="table-auto w-full max-w-3xl"><tbody className="w-full max-w-3xl">
+      <tr>
+        <th align= "left"><label className="m-1">Fidelity API Key</label></th>
+        <th align= "left"><input type="text" className="bg-base-300 m-2 input input-md text-normal w-full max-w-xl" placeholder="Fidelity API key" value={fidelityKey} onChange={fidelityKeyChange} /></th>
+      </tr>
+      <tr>
+        <th align= "left"><label className="m-1">Fidelity API Host</label></th>
+        <th align= "left"><input type="text" className="bg-base-300 m-2 input input-md text-normal w-full max-w-xl" placeholder="Fidelity API Host" value={fidelityHost} onChange={fidelityHostChange} /></th>
+      </tr>
+
+      <tr>
+        <th align= "left"><label className="m-1">Yahoo API Key</label></th>
+        <th align= "left"><input type="text" className="bg-base-300 m-2 input input-md text-normal w-full max-w-xl" placeholder="Yahoo API key" value={yahooKey} onChange={yahooKeyChange} /></th>
+      </tr>
+      <tr>
+        <th align= "left"><label className="m-1">Yahoo API Host</label></th>
+        <th align= "left"><input type="text" className="bg-base-300 m-2 input input-md text-normal w-full max-w-xl" placeholder="Yahoo API Host" value={yahooHost} onChange={yahooHostChange} /></th>
+      </tr>
+
+      <tr>
+        <th align= "left"><label className="m-1">Option chain length</label></th>
+        <th align= "left"><input type="number" className="bg-base-300 m-2 input input-2xl w-24 text-normal" placeholder="Option chain length" value={optionChainLength} onChange={optionChainLengthChange} /> pcs</th>
+      </tr>
+      <tr>
+        <th align= "left"><label className="m-1">Refresh interval</label></th>
+        <th align= "left"><input type="number" className="bg-base-300 m-2 input input-2xl w-24 text-normal" placeholder="Refresh interval" value={refreshInterval} onChange={refreshIntervalChange} /> sec</th>
+      </tr>
+      </tbody></table>
+
+
+      <h1 className="text-2xl m-4">Volume alert strategy settings</h1>
+
+      <table className="table-auto w-full max-w-3xl"><tbody className="w-full max-w-3xl">
+      <tr>
+        <th align= "left"><label tabIndex={0} className="m-1">Volume alert value</label></th>
+        <th align= "left"><input tabIndex={0} type="number" className="bg-base-300 m-2 input w-24 input-2xl text-normal" placeholder="Volume alert value" value={volumeAlertValue} onChange={volumeAlertValueChange} /></th>
+      </tr>
+      <tr>
+        <th align= "left"><label tabIndex={1} className="m-1">Stochastic alert value</label></th>
+        <th align= "left"><input tabIndex={1} type="number" className="bg-base-300 m-2 input w-24 input-2xl text-normal" placeholder="Stochastic Alert Value" value={stochasticAlertValue} onChange={stochasticAlertValueChange} /></th>
+      </tr>
+      </tbody></table>
+
+      <button onClick={saveButtonHandler} className="btn w-full my-4 btn-primary">Backup to local</button>
+      <button onClick={loadButtonHandler} className="btn w-full my-4 btn-primary">Restore from local</button>
     </>
   );
 }

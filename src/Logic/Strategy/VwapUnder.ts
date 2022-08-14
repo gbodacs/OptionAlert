@@ -8,7 +8,7 @@ import {Vwap, VwapInput} from "../../Indicators/vwap"
 
 class VwapAboveStrategy extends StrategyBase {
   constructor(optionTicker: string, underlyingTicker:string) {
-    super(optionTicker, underlyingTicker, "Josh VWAP under");
+    super(optionTicker, "Josh VWAP under");
   }
 
   Tick():void {

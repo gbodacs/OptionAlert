@@ -1,24 +1,23 @@
 import Global from "../../Global/Global";
 import logger from "../../Utils/logger";
+import { getUnderlyingTickerFromOptionsTicker } from "../../Utils/timedate";
 
 abstract class StrategyBase {
-  constructor(ticker: string, underlyingTicker:string, strategyName: string) {
+  constructor(ticker: string, strategyName: string) {
     this.optionTicker = ticker;
     this.lastTimestamp = 0;
     this.strategyName = strategyName;
-    this.underlyingTicker = underlyingTicker;
     return
   }
 
   protected strategyName: string;
-  private underlyingTicker: string;
   private optionTicker: string;
   protected lastTimestamp: number;
 
   getStrategyName() {return this.strategyName}
   getOptionTicker() {return this.optionTicker}
-  getUnderlyingTicker() {return this.underlyingTicker}
   getLastTimeStamp() {return this.lastTimestamp}
+  getUnderlyingTicker(): string { return getUnderlyingTickerFromOptionsTicker(this.optionTicker) };
 
   abstract Tick():void;
 
