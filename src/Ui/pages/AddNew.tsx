@@ -8,6 +8,7 @@ import closeDropDown from "../../Utils/closedropdown";
 
 function AddNew() {
   const [ticker, setTicker] = useState<string>("");
+  const [expiration, setExpiration] = useState<string>("");
   const [option, setOption] = useState<string>("");
   const [callChain, setCallChain] = useState<OptionInfo[]>([]);
   const [putChain, setPutChain] = useState<OptionInfo[]>([]);
@@ -18,6 +19,10 @@ function AddNew() {
 
   const handleTickerChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTicker(e.target.value.toUpperCase());
+  };
+
+  const handleExpirationChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setExpiration(e.target.value);
   };
 
   const addButtonHandler = async (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -84,6 +89,11 @@ debugger
     setPutChain(puts);
   };
 
+  const expirationButtonHandler = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    //setExpiration()
+  }
+
   const handlePutSelect = (event: React.MouseEvent<HTMLLIElement>) => {
     event.preventDefault();
 
@@ -102,7 +112,8 @@ debugger
     closeDropDown();
   };
 
-  const renderOptions:boolean = (putChain.length>0 && callChain.length>0);
+  const renderExpiration:boolean = (putChain.length>0 && callChain.length>0);
+  const renderOptions:boolean = (expiration !== "");
   const renderStrategy:boolean = option !== "";
 
   return (
@@ -116,57 +127,71 @@ debugger
           </button>
         </div>
       </div>
-          
-          { renderOptions && (
-            <div>
-            <h1 className="text-2xl m-4">Select option</h1>
-            <div className="grid grid-cols-1 xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 mb-8 gap-8">
-              <div className="relative">
-                <div className="dropdown dropdown-right">
-                  <label tabIndex={0} className="btn m-1">
-                    Calls
-                  </label>
-                  <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-base-200 rounded-box w-52">
-                    {callChain.map((item, index) => (
-                      <li value={index} key={index} onClick={handleCallSelect}>
-                        <a>{item.contractSymbol}</a>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
 
-                <div className="dropdown dropdown-right">
-                  <label tabIndex={0} className="btn m-1">
-                    Puts
-                  </label>
-                  <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-base-200 rounded-box w-52">
-                    {putChain.map((item, index) => (
-                      <li value={index} key={index} onClick={handlePutSelect}>
-                        <a>{item.contractSymbol}</a>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <input readOnly tabIndex={0} type="text" className="bg-base-300 m-1 input input-xl text-normal" placeholder="Select call or put option" value={option} />
-              </div>
-            </div>
-          </div>)}
-
-          {renderStrategy /*todo add strategy list */ && (
-            <div>
-            <h1 className="text-2xl m-4">Select strategy</h1>
-            <div className="grid grid-cols-1 xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 mb-8 gap-8">
-              <div className="relative">
-              <select className="select w-full max-w-lg bg-base-300">
-                <option selected>Option volume spike</option>
-                <option disabled>VWAP under 20</option>
-                <option disabled>Another strategy</option>
-              </select>
-              </div>
-            </div>
-            <button onClick={addButtonHandler} className="btn w-full btn-primary">Add</button>
+      { renderExpiration && (
+        <div>
+        <h1 className="text-2xl m-4">Select expiration date</h1>
+        <div className="grid grid-cols-1 xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 mb-8 gap-8">
+          <div className="relative">
+            <input type="date" className="w-full pr-40 bg-base-300 input input-md text-lg" placeholder="Search" value={expiration} onChange={handleExpirationChange} />
+            <button type="button" onClick={expirationButtonHandler} className="absolute top-0 right-0 rounded-l-none w-36 btn btn-md">
+              Go
+            </button>
           </div>
-          )}
+        </div>
+        </div>
+      )}
+          
+      { renderOptions && (
+        <div>
+        <h1 className="text-2xl m-4">Select option</h1>
+        <div className="grid grid-cols-1 xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 mb-8 gap-8">
+          <div className="relative">
+            <div className="dropdown dropdown-right">
+              <label tabIndex={0} className="btn m-1">
+                Calls
+              </label>
+              <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-base-200 rounded-box w-52">
+                {callChain.map((item, index) => (
+                  <li value={index} key={index} onClick={handleCallSelect}>
+                    <a>{item.contractSymbol}</a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="dropdown dropdown-right">
+              <label tabIndex={0} className="btn m-1">
+                Puts
+              </label>
+              <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-base-200 rounded-box w-52">
+                {putChain.map((item, index) => (
+                  <li value={index} key={index} onClick={handlePutSelect}>
+                    <a>{item.contractSymbol}</a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <input readOnly tabIndex={0} type="text" className="bg-base-300 m-1 input input-xl text-normal" placeholder="Select call or put option" value={option} />
+          </div>
+        </div>
+      </div>)}
+
+      {renderStrategy /*todo add strategy list */ && (
+        <div>
+        <h1 className="text-2xl m-4">Select strategy</h1>
+        <div className="grid grid-cols-1 xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 mb-8 gap-8">
+          <div className="relative">
+          <select className="select w-full max-w-lg bg-base-300">
+            <option selected>Option volume spike</option>
+            <option disabled>VWAP under 20</option>
+            <option disabled>Another strategy</option>
+          </select>
+          </div>
+        </div>
+        <button onClick={addButtonHandler} className="btn w-full btn-primary">Add</button>
+      </div>
+      )}
     </>
   );
 }
