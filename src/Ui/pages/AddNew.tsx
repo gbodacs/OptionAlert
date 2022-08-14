@@ -56,14 +56,14 @@ function AddNew() {
     return Math.round(puts.length/2);
   }
 
-  const tickerButtonHandler = async (event: React.MouseEvent<HTMLButtonElement>) => {
+  const expirationButtonHandler = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
 
     setCallChain([])
     setPutChain([])
     setOption("")
 
-    const ret = await Global.getInstance().getStrategyManager().getTickerManager().getOptionChain(ticker);
+    const ret = await Global.getInstance().getStrategyManager().getTickerManager().getOptionChain(ticker, expiration);
     if (ret === undefined) {
       logger.error("Unable to download option chain!");
       toast.error("Unable to download option chain!")
@@ -84,15 +84,10 @@ function AddNew() {
       if (i<ret.puts.length)
         puts.push(ret.puts[i])
     }
-debugger
+
     setCallChain(calls);
     setPutChain(puts);
   };
-
-  const expirationButtonHandler = async (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    //setExpiration()
-  }
 
   const handlePutSelect = (event: React.MouseEvent<HTMLLIElement>) => {
     event.preventDefault();
@@ -112,8 +107,8 @@ debugger
     closeDropDown();
   };
 
-  const renderExpiration:boolean = (putChain.length>0 && callChain.length>0);
-  const renderOptions:boolean = (expiration !== "");
+  const renderExpiration:boolean = ticker !== "";
+  const renderOptions:boolean = (putChain.length>0 && callChain.length>0);
   const renderStrategy:boolean = option !== "";
 
   return (
@@ -121,10 +116,7 @@ debugger
       <h1 className="text-2xl m-4">Select underlying</h1>
       <div className="grid grid-cols-1 xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 mb-8 gap-8">
         <div className="relative">
-          <input type="text" className="w-full pr-40 bg-base-300 input input-md text-lg" placeholder="Search" value={ticker} onChange={handleTickerChange} />
-          <button type="button" onClick={tickerButtonHandler} className="absolute top-0 right-0 rounded-l-none w-36 btn btn-md">
-            Go
-          </button>
+          <input type="text" className="w-full pr-40 bg-base-300 input input-md text-lg" placeholder="Underlying ticker" value={ticker} onChange={handleTickerChange} />
         </div>
       </div>
 

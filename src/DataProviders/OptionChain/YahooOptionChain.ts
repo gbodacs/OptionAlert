@@ -5,10 +5,10 @@ import logger from "../../Utils/logger";
 import { OptionChain, OptionChainData } from "./OptionChain";
 
 class YahooOptionChain implements OptionChain {
-  async GetOptionChainElements(ticker: string): Promise<OptionChainData | undefined> {
+  async GetOptionChainElements(ticker: string, expiration: string): Promise<OptionChainData | undefined> {
     const encodedParams = new URLSearchParams();
     encodedParams.append("symbol", ticker);
-    encodedParams.append("date", "2022-08-12");  // todo: next friday?
+    encodedParams.append("date", expiration);
 
     const url = "https://yahoo-finance97.p.rapidapi.com/option-chain";
 

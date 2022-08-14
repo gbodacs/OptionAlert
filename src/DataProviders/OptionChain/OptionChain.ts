@@ -16,5 +16,5 @@ export interface OptionChainData {
 
 export abstract class OptionChain {
   // abstract Init(): Promise<boolean>;
-  abstract GetOptionChainElements(ticker: string): Promise<OptionChainData|undefined>;
+  abstract GetOptionChainElements(ticker: string, expiration: string): Promise<OptionChainData|undefined>;
 }

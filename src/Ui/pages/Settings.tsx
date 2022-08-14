@@ -148,7 +148,7 @@ export default function Settings() {
       </tbody></table>
 
 
-      <h1 className="text-2xl m-4">Volume alert strategy settings</h1>
+      <h1 className="text-2xl m-4">Option volume spike strategy settings</h1>
 
       <table className="table-auto w-full max-w-3xl"><tbody className="w-full max-w-3xl">
       <tr>

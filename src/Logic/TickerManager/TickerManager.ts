@@ -25,9 +25,9 @@ class TickerManager {
     this.lastGetTime = tempDate.getTime() / 1000; // Set start time to today - 9:00am
   }
 
-  async getOptionChain(ticker: string): Promise<OptionChainData | undefined> {
+  async getOptionChain(ticker: string, expiration: string): Promise<OptionChainData | undefined> {
     /* Get Option Chain */
-    const optionChain = await this.optionChain.GetOptionChainElements(ticker);
+    const optionChain = await this.optionChain.GetOptionChainElements(ticker, expiration);
     if (optionChain === undefined) {
       return undefined;
     }
