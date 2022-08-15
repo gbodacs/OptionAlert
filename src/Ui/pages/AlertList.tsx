@@ -28,7 +28,7 @@ function AlertList() {
   }, []);
 
   const deleteButtonHandler = async (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault(); // todo: delete alertline!
+    event.preventDefault();
 
     Global.getInstance().getAlertManager().RemoveAlert(+event.currentTarget.value)
     setUpdate(update-1);

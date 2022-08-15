@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.appvag.optionalert" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>Option Alert</name>
+    <description>An app to send option alert.</description>
+    <author email="developer@appvagance.com" href="https://appvagance.com">
+        AppVagance
+    </author>
+    <content src="index.html" />
+    <allow-intent href="https://*p.rapidapi.com/*" />
+    <access origin="https://*p.rapidapi.com/*" />
+</widget>

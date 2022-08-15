@@ -1,6 +1,9 @@
 {
-  "name": "my-app",
+  "displayName": "Option Alert",
+  "name": "com.appvag.optionalert",
   "version": "0.1.0",
+  "homepage": "./",
+  "description": "An app to send option alerts.",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.4",
@@ -27,6 +30,16 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
+  "keywords": [
+    "ecosystem:cordova"
+  ],
+  "author": "Gabor Bodacs",
+  "license": "Apache-2.0",
+  "cordova": {
+    "platforms": [
+      "android"
+    ]
+  },
   "eslintConfig": {
     "extends": [
       "react-app",
@@ -47,6 +60,7 @@
   },
   "devDependencies": {
     "autoprefixer": "^10.4.8",
+    "cordova-android": "^10.1.2",
     "daisyui": "^2.20.0",
     "postcss": "^8.4.14",
     "tailwindcss": "^3.1.7"
