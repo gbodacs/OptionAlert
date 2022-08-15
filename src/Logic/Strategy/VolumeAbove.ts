@@ -13,7 +13,7 @@ class VolumeAboveStrategy extends StrategyBase {
     // Get data from store
     const item = Global.getInstance().getCandleStore().GetTickerDataByTicker(this.getOptionTicker());
     if (item === undefined) {
-      logger.error("VolumeAboveStrategy.Tick() cannot get data");
+      logger.error("VolumeAboveStrategy.Tick() ticker is not available in the store: "+this.getOptionTicker());
       return;
     }
 
@@ -31,10 +31,10 @@ class VolumeAboveStrategy extends StrategyBase {
       const elem = chartData[i]
       if (elem.volume > minVol) {
 
-        Global.getInstance().getAlertManager().AddAlert(
+        Global.getInstance().getAlertManager().addAlert(
           item.ticker,
           this.strategyName,
-          elem.timestamp,
+          elem.timestamp, // todo add underlying ticker price
           " Volume " + elem.volume + " is above the limit:" + minVol + " at the moment: " + getTimestampStringEST(elem.timestamp));
       }
     }

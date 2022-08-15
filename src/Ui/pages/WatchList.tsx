@@ -2,25 +2,22 @@ import React from "react";
 import { useEffect, useState } from "react";
 import Global from "../../Global/Global";
 import logger from "../../Utils/logger";
-import { FaPen } from "react-icons/fa";
+import { FaTrash } from "react-icons/fa";
 import VolumeAboveStrategy from "../../Logic/Strategy/VolumeAbove";
 import closeDropDown from "../../Utils/closedropdown";
 
 function WatchList() {
-  const [ticker, setTicker] = useState<string>("");
+  const [update, setUpdate] = useState<number>(1);
 
   useEffect( () => {
     closeDropDown();
   }, [])
   
-  const refreshListItems = () => {
-    // Global.getInstance().getAlertManager().Alert;
-    console.log("refreshListItems called!");
-    //setTimeout( () => { refreshListItems() }, 3000)
-  };
-
-  const editButtonHandler = async (event: React.MouseEvent<HTMLButtonElement>) => {
+  const removeButtonHandler = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
+
+    Global.getInstance().getStrategyManager().removeStrategy(+event.currentTarget.value)
+    setUpdate(update-1);
   }
 
   return (
@@ -33,8 +30,7 @@ function WatchList() {
               <th>Underlying</th>
               <th>Option</th>
               <th>Strategy</th>
-              <th>Alert</th>
-              <th>Edit</th>
+              <th>Remove</th>
             </tr>
           </thead>
           <tbody>
@@ -43,8 +39,7 @@ function WatchList() {
                   <th>{item.getUnderlyingTicker()}</th>
                   <td>{item.getOptionTicker()}</td>
                   <td>{item.getStrategyName()}</td>
-                  <td>-</td>
-                  <td><button className="btn btn-md bg-base-200" onClick={editButtonHandler}><FaPen /></button></td>
+                  <td><button className="btn btn-md bg-base-200" onClick={removeButtonHandler} value={index}><FaTrash /></button></td>
                 </tr>
               ))}
           </tbody>

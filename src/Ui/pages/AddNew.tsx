@@ -18,6 +18,10 @@ function AddNew() {
   }, [])
 
   const handleTickerChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (Global.getInstance().getConstManager().getFidelityHost() === "") {
+      toast("Go to settings and fill the required fields.")
+    }
+
     setTicker(e.target.value.toUpperCase());
   };
 

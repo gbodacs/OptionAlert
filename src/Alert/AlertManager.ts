@@ -1,4 +1,3 @@
-import { timeStamp } from "console";
 import logger from "../Utils/logger";
 import { getUnderlyingTickerFromOptionsTicker } from "../Utils/timedate";
 import AlertItem from "./AlertItem";
@@ -20,7 +19,7 @@ class AlertManager {
     return this.alertItems;
   }
 
-  private AddItemToList(underlyingTicker: string, optionTicker: string, strategy: string, timestamp: number, text: string) {
+  private addItemToList(underlyingTicker: string, optionTicker: string, strategy: string, timestamp: number, text: string) {
     const ret = this.alertItems.find((item) => {
       if (item.strategyName === strategy && item.optionTicker === optionTicker && item.underlyingTicker === underlyingTicker && item.timestamp === timestamp) {
         return true;
@@ -38,20 +37,18 @@ class AlertManager {
     return false;
   }
 
-  public RemoveAlert(idx: number) {
+  public removeAlert(idx: number) {
     this.alertItems.splice(idx,1)
   }
 
-  public AddAlert(optionTicker: string, strategy: string, timestamp:number, text: string) {
+  public addAlert(optionTicker: string, strategy: string, timestamp:number, text: string) {
     const underlyingTicker = getUnderlyingTickerFromOptionsTicker(optionTicker);
-    if (! this.AddItemToList(underlyingTicker, optionTicker, strategy, timestamp, text) )
+    if (! this.addItemToList(underlyingTicker, optionTicker, strategy, timestamp, text) )
       return; // Already added to the list
 
     let out: string = strategy + " alert!";
     if (underlyingTicker !== "") out += " Underlyingticker: " + underlyingTicker;
-
     if (optionTicker !== "") out += " OptionTicker: " + optionTicker;
-
     if (text !== "") out += " " + text;
 
     if (this.toConsole) {

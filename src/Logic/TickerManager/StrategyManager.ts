@@ -19,6 +19,10 @@ class StrategyManager {
     return this.strategies;
   }
 
+  public removeStrategy(idx: number) {
+    this.strategies.splice(idx,1)
+  }
+
   public getTickerManager() {
     return this.tickerManager;
   }

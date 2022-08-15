@@ -16,6 +16,14 @@ export default class ConstManager {
   constructor() {
     this.Restore()
   }
+
+  /*
+  DO NOT SAVE PROPERTIES!
+   */
+  public Version = "0.1.0"
+  /*
+  DO NOT SAVE PROPERTIES!
+   */
   
   private constManagerName = "ConstManager"
 
@@ -24,11 +32,11 @@ export default class ConstManager {
   private optionChainLength = 10;
   private refreshInterval = 20000; // 20 sec refresh
 //
-  private fidelityKey = "dfa5a6ee0amsh91e2a8f071665a8p155928jsn1d6b32ec48d3"
-  private fidelityHost = "fidelity-investments.p.rapidapi.com"
+  private fidelityKey = ""
+  private fidelityHost = ""
 
-  private yahooKey = "dfa5a6ee0amsh91e2a8f071665a8p155928jsn1d6b32ec48d3"
-  private yahooHost = "yahoo-finance97.p.rapidapi.com"
+  private yahooKey = ""
+  private yahooHost = ""
 
   // Globals
   public getRefreshInterval(): number {return this.refreshInterval;}
@@ -107,3 +115,8 @@ export default class ConstManager {
     }
   }
 }
+/*
+  private fidelityHost = "fidelity-investments.p.rapidapi.com"
+  private Key = "dfa5a6ee0amsh91e2a8f071665a8p155928jsn1d6b32ec48d3"
+  private yahooHost = "yahoo-finance97.p.rapidapi.com"
+  */
