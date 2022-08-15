@@ -31,7 +31,7 @@ class VolumeAboveStrategy extends StrategyBase {
       const elem = chartData[i]
       if (elem.volume > minVol) {
 
-        Global.getInstance().getAlertManager().Alert(
+        Global.getInstance().getAlertManager().AddAlert(
           item.ticker,
           this.strategyName,
           elem.timestamp,

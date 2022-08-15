@@ -10,6 +10,7 @@ import { FaRecycle, FaTrash } from "react-icons/fa";
 
 function AlertList() {
   const [ticker, setTicker] = useState<string>("");
+  const [update, setUpdate] = useState<number>(1);
 
   const tick = () => {
     logger.info("--- AlertList::tick called()!")
@@ -17,6 +18,7 @@ function AlertList() {
 
     setTimeout(() => {
       tick();
+      setUpdate(update+1);
     }, Global.getInstance().getConstManager().getRefreshInterval());
   }
 
@@ -27,6 +29,9 @@ function AlertList() {
 
   const deleteButtonHandler = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault(); // todo: delete alertline!
+
+    Global.getInstance().getAlertManager().RemoveAlert(+event.currentTarget.value)
+    setUpdate(update-1);
   }
 
   return (
@@ -50,7 +55,7 @@ function AlertList() {
                   <td>{item.optionTicker}</td>
                   <td>{item.strategyName}</td>
                   <td>{getTimestampStringEST(item.timestamp)}</td>
-                  <td><button className="btn btn-md bg-base-200" onClick={deleteButtonHandler}><FaTrash /></button></td>
+                  <td><button className="btn btn-md bg-base-200" onClick={deleteButtonHandler} value={index}><FaTrash /></button></td>
                 </tr>
               ))}
           </tbody>

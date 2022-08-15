@@ -9,19 +9,19 @@ export function getTimestampStringEST(timestamp: number) {
   return new Date(timestamp * 1000).toLocaleString("en-US", { timeZone: "America/New_York" })
 }
 
-export function getUnderlyingTickerFromOptionsTicker(optick: string):string {
-  if (optick === "") {
-    logger.error("StrategyBase - option ticker is empty!")
-    return optick; // not found, error!
+export function getUnderlyingTickerFromOptionsTicker(opTick: string):string {
+  if (opTick === "") {
+    logger.error("getUnderlyingTickerFromOptionsTicker - option ticker is empty!")
+    return opTick; // not found, error!
   }
 
-  if (optick.length < 5)
-    return optick; // this is not an option ticker
+  if (opTick.length < 5)
+    return opTick; // this is not an option ticker
 
-  let pos = optick.search("2"); // good till 2029-12-31 :D
+  let pos = opTick.search("2"); // good till 2029-12-31 :D
   if (pos === -1){
-    logger.error("StrategyBase - cannot convert option ticker to underlying ticker!")
-    return optick; // not found, error!
+    logger.error("getUnderlyingTickerFromOptionsTicker - cannot convert option ticker to underlying ticker!")
+    return opTick; // not found, error!
   }
-  return optick.slice(0, pos);
+  return opTick.slice(0, pos);
 }

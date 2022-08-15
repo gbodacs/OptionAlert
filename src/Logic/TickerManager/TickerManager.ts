@@ -4,7 +4,7 @@ import YahooOptionChain from "../../DataProviders/OptionChain/YahooOptionChain";
 import YahooIntraday from "../../DataProviders/Intraday/YahooIntraday";
 import FidelityIntraday from "../../DataProviders/Intraday/FidelityIntraday";
 
-import { getCurrTimeEST } from "../../Utils/timedate";
+import { getCurrTimeEST, getUnderlyingTickerFromOptionsTicker } from "../../Utils/timedate";
 import { OptionChainData } from "../../DataProviders/OptionChain/OptionChain";
 
 class TickerManager {
@@ -34,18 +34,19 @@ class TickerManager {
     return optionChain;
   }
 
-  AddTicker(t: string): void {
+  private AddTicker(t: string): void {
     if (this.Tickers.indexOf(t) === -1) {
       this.Tickers.push(t);
       logger.info("Ticker added:"+t)
     }
   }
 
-  AddOptionTicker(t: string): void {
+  public AddOptionTicker(t: string): void {
     if (this.OptionTickers.indexOf(t) === -1) {
       this.OptionTickers.push(t);
       logger.info("OptionTicker added:"+t)
-    } // todo: add automatic AddTicker() from first 3-4-5 chars
+    }
+    this.AddTicker(getUnderlyingTickerFromOptionsTicker(t))
   }
 
   async ApiCallTick(ticker: string, currTime: number) {
@@ -84,4 +85,4 @@ class TickerManager {
   }
 }
 
-export default TickerManager;
+export default TickerManager

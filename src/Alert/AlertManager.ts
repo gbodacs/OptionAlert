@@ -2,6 +2,7 @@ import { timeStamp } from "console";
 import logger from "../Utils/logger";
 import { getUnderlyingTickerFromOptionsTicker } from "../Utils/timedate";
 import AlertItem from "./AlertItem";
+import {toast} from "react-toastify"
 
 class AlertManager {
   protected toEmail: boolean = false;
@@ -37,7 +38,11 @@ class AlertManager {
     return false;
   }
 
-  public Alert(optionTicker: string, strategy: string, timestamp:number, text: string) {
+  public RemoveAlert(idx: number) {
+    this.alertItems.splice(idx,1)
+  }
+
+  public AddAlert(optionTicker: string, strategy: string, timestamp:number, text: string) {
     const underlyingTicker = getUnderlyingTickerFromOptionsTicker(optionTicker);
     if (! this.AddItemToList(underlyingTicker, optionTicker, strategy, timestamp, text) )
       return; // Already added to the list
@@ -58,7 +63,7 @@ class AlertManager {
     }
 
     if (this.toNotification) {
-      // todo: notification
+      toast.info(out)
     }
   }
 }
