@@ -167,30 +167,30 @@ export default function Settings() {
 
     <table className="table-auto w-full max-w-3xl"><tbody className="w-full max-w-3xl">
       <tr>
-        <th align= "left"><label className="m-1">Fidelity API Key</label></th>
-        <th align= "left"><input type="text" className="bg-base-300 m-2 input input-md text-normal w-full max-w-xl" placeholder="Fidelity API key" value={fidelityKey} onChange={fidelityKeyChange} /></th>
+        <th align= "left" className="m-1 w-20 max-w-lg"><label className="m-1">Fidelity API Key</label></th>
+        <th align= "left" className="m-1 w-20 max-w-lg"><input type="text" className="bg-base-300 m-2 input input-md text-normal w-full max-w-xl" placeholder="Fidelity API key" value={fidelityKey} onChange={fidelityKeyChange} /></th>
       </tr>
       <tr>
-        <th align= "left"><label className="m-1">Fidelity API Host</label></th>
-        <th align= "left"><input type="text" className="bg-base-300 m-2 input input-md text-normal w-full max-w-xl" placeholder="Fidelity API Host" value={fidelityHost} onChange={fidelityHostChange} /></th>
-      </tr>
-
-      <tr>
-        <th align= "left"><label className="m-1">Yahoo API Key</label></th>
-        <th align= "left"><input type="text" className="bg-base-300 m-2 input input-md text-normal w-full max-w-xl" placeholder="Yahoo API key" value={yahooKey} onChange={yahooKeyChange} /></th>
-      </tr>
-      <tr>
-        <th align= "left"><label className="m-1">Yahoo API Host</label></th>
-        <th align= "left"><input type="text" className="bg-base-300 m-2 input input-md text-normal w-full max-w-xl" placeholder="Yahoo API Host" value={yahooHost} onChange={yahooHostChange} /></th>
+        <th align= "left" className="m-1 w-20 max-w-lg"><label className="m-1">Fidelity API Host</label></th>
+        <th align= "left" className="m-1 w-20 max-w-lg"><input type="text" className="bg-base-300 m-2 input input-md text-normal w-full max-w-xl" placeholder="Fidelity API Host" value={fidelityHost} onChange={fidelityHostChange} /></th>
       </tr>
 
       <tr>
-        <th align= "left"><label className="m-1">Option chain length</label></th>
-        <th align= "left"><input type="number" className="bg-base-300 m-2 input input-2xl w-24 text-normal" placeholder="Option chain length" value={optionChainLength} onChange={optionChainLengthChange} /> pcs</th>
+        <th align= "left" className="m-1 w-20 max-w-lg"><label className="m-1">Yahoo API Key</label></th>
+        <th align= "left" className="m-1 w-20 max-w-lg"><input type="text" className="bg-base-300 m-2 input input-md text-normal w-full max-w-xl" placeholder="Yahoo API key" value={yahooKey} onChange={yahooKeyChange} /></th>
       </tr>
       <tr>
-        <th align= "left"><label className="m-1">Refresh interval</label></th>
-        <th align= "left"><input type="number" className="bg-base-300 m-2 input input-2xl w-24 text-normal" placeholder="Refresh interval" value={refreshInterval} onChange={refreshIntervalChange} /> sec</th>
+        <th align= "left" className="m-1 w-20 max-w-lg"><label className="m-1">Yahoo API Host</label></th>
+        <th align= "left" className="m-1 w-20 max-w-lg"><input type="text" className="bg-base-300 m-2 input input-md text-normal w-full max-w-xl" placeholder="Yahoo API Host" value={yahooHost} onChange={yahooHostChange} /></th>
+      </tr>
+
+      <tr>
+        <th align= "left" className="m-1 w-20 max-w-lg"><label className="m-1">Option chain length</label></th>
+        <th align= "left" className="m-1 w-20 max-w-lg"><input type="number" className="bg-base-300 m-2 input input-2xl w-24 text-normal" placeholder="Option chain length" value={optionChainLength} onChange={optionChainLengthChange} /> pcs</th>
+      </tr>
+      <tr>
+        <th align= "left" className="m-1 w-20 max-w-lg"><label className="m-1">Refresh interval</label></th>
+        <th align= "left" className="m-1 w-20 max-w-lg"><input type="number" className="bg-base-300 m-2 input input-2xl w-24 text-normal" placeholder="Refresh interval" value={refreshInterval} onChange={refreshIntervalChange} /> sec</th>
       </tr>
       </tbody></table>
 
@@ -199,12 +199,12 @@ export default function Settings() {
 
       <table className="table-auto w-full max-w-3xl"><tbody className="w-full max-w-3xl">
       <tr>
-        <th align= "left"><label tabIndex={0} className="m-1">Volume alert value</label></th>
-        <th align= "left"><input tabIndex={0} type="number" className="bg-base-300 m-2 input w-24 input-2xl text-normal" placeholder="Volume alert value" value={volumeAlertValue} onChange={volumeAlertValueChange} /></th>
+        <th align= "left" className="m-1 w-20 max-w-lg"><label tabIndex={0} className="m-1">Volume alert value</label></th>
+        <th align= "left" className="m-1 w-20 max-w-lg"><input tabIndex={0} type="number" className="bg-base-300 m-2 input w-24 input-2xl text-normal" placeholder="Volume alert value" value={volumeAlertValue} onChange={volumeAlertValueChange} /></th>
       </tr>
       <tr>
-        <th align= "left"><label tabIndex={1} className="m-1">Stochastic alert value</label></th>
-        <th align= "left"><input tabIndex={1} type="number" className="bg-base-300 m-2 input w-24 input-2xl text-normal" placeholder="Stochastic Alert Value" value={stochasticAlertValue} onChange={stochasticAlertValueChange} /></th>
+        <th align= "left" className="m-1 w-20 max-w-lg"><label tabIndex={1} className="m-1">Stochastic alert value</label></th>
+        <th align= "left" className="m-1 w-20 max-w-lg"><input tabIndex={1} type="number" className="bg-base-300 m-2 input w-24 input-2xl text-normal" placeholder="Stochastic Alert Value" value={stochasticAlertValue} onChange={stochasticAlertValueChange} /></th>
       </tr>
       </tbody></table>
 
@@ -212,20 +212,20 @@ export default function Settings() {
 
       <table className="table-auto w-full max-w-3xl"><tbody className="w-full max-w-3xl">
       <tr>
-        <th align= "left"><label tabIndex={0} className="m-1">RSI below alert value</label></th>
-        <th align= "left"><input tabIndex={0} type="number" className="bg-base-300 m-2 input w-24 input-2xl text-normal" placeholder="Volume alert value" value={rsiMinValue} onChange={rsiMinValueChange} /></th>
+        <th align= "left" className="m-1 w-20 max-w-lg"><label tabIndex={0} className="m-1">RSI below alert value</label></th>
+        <th align= "left" className="m-1 w-20 max-w-lg"><input tabIndex={0} type="number" className="bg-base-300 m-2 input w-24 input-2xl text-normal" placeholder="Volume alert value" value={rsiMinValue} onChange={rsiMinValueChange} /></th>
       </tr>
       <tr>
-        <th align= "left"><label tabIndex={0} className="m-1">RSI above alert value</label></th>
-        <th align= "left"><input tabIndex={0} type="number" className="bg-base-300 m-2 input w-24 input-2xl text-normal" placeholder="Volume alert value" value={rsiMaxValue} onChange={rsiMaxValueChange} /></th>
+        <th align= "left" className="m-1 w-20 max-w-lg"><label tabIndex={0} className="m-1">RSI above alert value</label></th>
+        <th align= "left" className="m-1 w-20 max-w-lg"><input tabIndex={0} type="number" className="bg-base-300 m-2 input w-24 input-2xl text-normal" placeholder="Volume alert value" value={rsiMaxValue} onChange={rsiMaxValueChange} /></th>
       </tr>
       <tr>
-        <th align= "left"><label tabIndex={0} className="m-1">Stochastic below alert value</label></th>
-        <th align= "left"><input tabIndex={0} type="number" className="bg-base-300 m-2 input w-24 input-2xl text-normal" placeholder="Volume alert value" value={stochasticMinValue} onChange={stochasticMinValueChange} /></th>
+        <th align= "left" className="m-1 w-20 max-w-lg"><label tabIndex={0} className="m-1">Stochastic below alert value</label></th>
+        <th align= "left" className="m-1 w-20 max-w-lg"><input tabIndex={0} type="number" className="bg-base-300 m-2 input w-24 input-2xl text-normal" placeholder="Volume alert value" value={stochasticMinValue} onChange={stochasticMinValueChange} /></th>
       </tr>
       <tr>
-        <th align= "left"><label tabIndex={0} className="m-1">Stochastic above alert value</label></th>
-        <th align= "left"><input tabIndex={0} type="number" className="bg-base-300 m-2 input w-24 input-2xl text-normal" placeholder="Volume alert value" value={stochasticMaxValue} onChange={stochasticMaxValueChange} /></th>
+        <th align= "left" className="m-1 w-20 max-w-lg"><label tabIndex={0} className="m-1">Stochastic above alert value</label></th>
+        <th align= "left" className="m-1 w-20 max-w-lg"><input tabIndex={0} type="number" className="bg-base-300 m-2 input w-24 input-2xl text-normal" placeholder="Volume alert value" value={stochasticMaxValue} onChange={stochasticMaxValueChange} /></th>
       </tr>
       </tbody></table>
 
