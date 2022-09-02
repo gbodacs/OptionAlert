@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import Global from "../../Global/Global";
 import logger from "../../Utils/logger";
 import { FaTrash } from "react-icons/fa";
-import VolumeAboveStrategy from "../../Logic/Strategy/VolumeAbove";
+import VolumeAboveStrategy from "../../Logic/Strategy/Volume_Above";
 import closeDropDown from "../../Utils/closedropdown";
 
 function WatchList() {

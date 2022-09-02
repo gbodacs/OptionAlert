@@ -1,7 +1,7 @@
 {
   "displayName": "Option Alert",
   "name": "com.appvag.optionalert",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "homepage": "./",
   "description": "An app to send option alerts.",
   "private": true,
@@ -37,7 +37,8 @@
   "license": "Apache-2.0",
   "cordova": {
     "platforms": [
-      "android"
+      "android",
+      "electron"
     ]
   },
   "eslintConfig": {
@@ -61,8 +62,16 @@
   "devDependencies": {
     "autoprefixer": "^10.4.8",
     "cordova-android": "^10.1.2",
+    "cordova-electron": "^3.1.0",
     "daisyui": "^2.20.0",
     "postcss": "^8.4.14",
     "tailwindcss": "^3.1.7"
+  },
+  "build": {
+    "extends": null,
+    "appId": "com.appvagance.optionalert",
+    "productName": "Option Alert",
+    "copyright": "Copyright @2022 AppVagance",
+    "buildVersion": "1.0.0.0"
   }
 }

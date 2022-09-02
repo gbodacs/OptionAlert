@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import Global from "../../Global/Global";
-import VolumeAboveStrategy from "../../Logic/Strategy/VolumeAbove";
+import VolumeAboveStrategy from "../../Logic/Strategy/Volume_Above";
 import closeDropDown from "../../Utils/closedropdown";
 
 export default function Settings() {
@@ -15,6 +15,12 @@ export default function Settings() {
 
   const [volumeAlertValue, setVolumeAlertValue] = useState<number>(0);
   const [stochasticAlertValue, setStochasticAlertValue] = useState<number>(0);
+
+  const [stochasticMinValue, setStochasticMinValue] = useState<number>(20);
+  const [stochasticMaxValue, setStochasticMaxValue] = useState<number>(80);
+
+  const [rsiMinValue, setRsiMinValue] = useState<number>(30);
+  const [rsiMaxValue, setRsiMaxValue] = useState<number>(70);
 
 
   useEffect(() => {
@@ -35,6 +41,11 @@ export default function Settings() {
 
     Global.getInstance().getConstManager().setVolumeAlertValue(volumeAlertValue)
     Global.getInstance().getConstManager().setStochasticAlertValue(stochasticAlertValue)
+
+    Global.getInstance().getConstManager().setStochasticMaxValue(stochasticMaxValue)
+    Global.getInstance().getConstManager().setStochasticMinValue(stochasticMinValue)
+    Global.getInstance().getConstManager().setRsiMaxValue(rsiMaxValue)
+    Global.getInstance().getConstManager().setRsiMinValue(rsiMinValue)
 
     Global.getInstance().getConstManager().Backup()
 
@@ -114,6 +125,42 @@ export default function Settings() {
     setStochasticAlertValue( interval );
   };
 
+  const stochasticMaxValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let interval = +e.target.value
+    if (interval<1)
+      interval = 1;
+    if (interval>99)
+      interval = 99
+    setStochasticMaxValue( interval );
+  };
+
+  const stochasticMinValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let interval = +e.target.value
+    if (interval<1)
+      interval = 1;
+    if (interval>99)
+      interval = 99
+    setStochasticMinValue( interval );
+  };
+
+  const rsiMaxValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let interval = +e.target.value
+    if (interval<1)
+      interval = 1;
+    if (interval>99)
+      interval = 99
+    setRsiMaxValue( interval );
+  };
+
+  const rsiMinValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let interval = +e.target.value
+    if (interval<1)
+      interval = 1;
+    if (interval>99)
+      interval = 99
+    setRsiMinValue( interval );
+  };
+
   return (
     <>
     <h1 className="text-2xl m-4">Global Settings</h1>
@@ -148,7 +195,7 @@ export default function Settings() {
       </tbody></table>
 
 
-      <h1 className="text-2xl m-4">Option volume spike strategy settings</h1>
+      <h1 className="text-2xl m-4">"Green bar" strategy settings</h1>
 
       <table className="table-auto w-full max-w-3xl"><tbody className="w-full max-w-3xl">
       <tr>
@@ -158,6 +205,27 @@ export default function Settings() {
       <tr>
         <th align= "left"><label tabIndex={1} className="m-1">Stochastic alert value</label></th>
         <th align= "left"><input tabIndex={1} type="number" className="bg-base-300 m-2 input w-24 input-2xl text-normal" placeholder="Stochastic Alert Value" value={stochasticAlertValue} onChange={stochasticAlertValueChange} /></th>
+      </tr>
+      </tbody></table>
+
+      <h1 className="text-2xl m-4">"RSI Stochastic" strategy settings</h1>
+
+      <table className="table-auto w-full max-w-3xl"><tbody className="w-full max-w-3xl">
+      <tr>
+        <th align= "left"><label tabIndex={0} className="m-1">RSI below alert value</label></th>
+        <th align= "left"><input tabIndex={0} type="number" className="bg-base-300 m-2 input w-24 input-2xl text-normal" placeholder="Volume alert value" value={rsiMinValue} onChange={rsiMinValueChange} /></th>
+      </tr>
+      <tr>
+        <th align= "left"><label tabIndex={0} className="m-1">RSI above alert value</label></th>
+        <th align= "left"><input tabIndex={0} type="number" className="bg-base-300 m-2 input w-24 input-2xl text-normal" placeholder="Volume alert value" value={rsiMaxValue} onChange={rsiMaxValueChange} /></th>
+      </tr>
+      <tr>
+        <th align= "left"><label tabIndex={0} className="m-1">Stochastic below alert value</label></th>
+        <th align= "left"><input tabIndex={0} type="number" className="bg-base-300 m-2 input w-24 input-2xl text-normal" placeholder="Volume alert value" value={stochasticMinValue} onChange={stochasticMinValueChange} /></th>
+      </tr>
+      <tr>
+        <th align= "left"><label tabIndex={0} className="m-1">Stochastic above alert value</label></th>
+        <th align= "left"><input tabIndex={0} type="number" className="bg-base-300 m-2 input w-24 input-2xl text-normal" placeholder="Volume alert value" value={stochasticMaxValue} onChange={stochasticMaxValueChange} /></th>
       </tr>
       </tbody></table>
 

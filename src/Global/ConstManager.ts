@@ -27,8 +27,16 @@ export default class ConstManager {
   
   private constManagerName = "ConstManager"
 
+  // Green Bar strategy
   private volumeAlertValue = 1000;
   private stochasticAlertValue = 20;
+
+  // RSI Stochastic strategy
+  private rsiMinValue = 30;
+  private rsiMaxValue = 70;
+  private stochasticMinValue = 20;
+  private stochasticMaxValue = 80;
+
   private optionChainLength = 10;
   private refreshInterval = 20000; // 20 sec refresh
 //
@@ -53,12 +61,23 @@ export default class ConstManager {
   public setYahooKey(i: string) {this.yahooKey = i}
   public setYahooHost(i: string) {this.yahooHost = i}
 
-  // VolumeAlert Strategy
+  // Green Bar Strategy
   public getVolumeAlertValue(): number {return this.volumeAlertValue;}
   public getStochasticAlertValue(): number {return this.stochasticAlertValue;}
 
   public setVolumeAlertValue(i: number) {this.volumeAlertValue = i}
   public setStochasticAlertValue(i: number) {this.stochasticAlertValue = i}
+
+  // RSI Stochastic Strategy
+  public getStochasticMaxValue(): number {return this.stochasticMaxValue;}
+  public getStochasticMinValue(): number {return this.stochasticMinValue;}
+  public getRsiMaxValue(): number {return this.rsiMaxValue;}
+  public getRsiMinValue(): number {return this.rsiMinValue;}
+
+  public setRsiMaxValue(i: number) {this.rsiMaxValue = i}
+  public setRsiMinValue(i: number) {this.rsiMinValue = i}
+  public setStochasticMaxValue(i: number) {this.stochasticMaxValue = i}
+  public setStochasticMinValue(i: number) {this.stochasticMinValue = i}
 
 
   Backup() {

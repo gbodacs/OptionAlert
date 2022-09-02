@@ -1,6 +1,6 @@
 import logger from "../../Utils/logger";
 import StrategyBase from "../Strategy/StrategyBase";
-import VolumeAboveStrategy from "../Strategy/VolumeAbove";
+import VolumeAboveStrategy from "../Strategy/Volume_Above";
 import TickerManager from "./TickerManager";
 
 class StrategyManager {

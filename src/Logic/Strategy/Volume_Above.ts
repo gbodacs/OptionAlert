@@ -6,7 +6,7 @@ import { getTimestampStringEST } from "../../Utils/timedate";
 // Volume on the 1 min chart is over "x"
 class VolumeAboveStrategy extends StrategyBase {
   constructor(optionTicker: string) {
-    super(optionTicker, "Option volume spike");
+    super(optionTicker, "Green bar");
   }
 
   Tick(): void {

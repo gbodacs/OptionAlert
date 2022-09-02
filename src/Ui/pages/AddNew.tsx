@@ -179,9 +179,9 @@ function AddNew() {
         <div className="grid grid-cols-1 xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 mb-8 gap-8">
           <div className="relative">
           <select className="select w-full max-w-lg bg-base-300">
-            <option selected>Option volume spike</option>
+            <option selected>Green bar</option>
             <option disabled>VWAP under 20</option>
-            <option disabled>Another strategy</option>
+            <option >RSI Stochastic</option>
           </select>
           </div>
         </div>
@@ -193,3 +193,6 @@ function AddNew() {
 }
 
 export default AddNew;
+
+// When the Stochastic hits 20 or below and the RSI hits 30 or below, send an alert.  Both conditions must be met.  Volume not relevant.
+// When the Stochastic hits 80 or Above and the RSI hits 70 or above, send an alert.  Both conditions must be met.  Volume not relevant.
