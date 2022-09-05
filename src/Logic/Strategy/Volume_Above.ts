@@ -4,7 +4,7 @@ import logger from "../../Utils/logger";
 import { getTimestampStringEST } from "../../Utils/timedate";
 
 // Volume on the 1 min chart is over "x"
-class VolumeAboveStrategy extends StrategyBase {
+class GreenBarStrategy extends StrategyBase {
   constructor(optionTicker: string) {
     super(optionTicker, "Green bar");
   }
@@ -42,4 +42,4 @@ class VolumeAboveStrategy extends StrategyBase {
   }
 }
 
-export default VolumeAboveStrategy;
+export default GreenBarStrategy;

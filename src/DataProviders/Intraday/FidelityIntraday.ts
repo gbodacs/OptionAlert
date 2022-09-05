@@ -29,8 +29,8 @@ class FidelityIntraday implements Intraday {
   toFidelityTickerFormat(ticker: string): string {
     if (ticker.length > 10) {
       // probably an option ticker? Should convert SPY22072200P385000 -> -SPY220722P385
-      //const to = "-SPY220722P385";
-      //const from = "SPY22072200P385000";
+      // const to = "-SPY220722P385";
+      // const from = "SPY22072200P385000";
 
       let lastChar = ticker.lastIndexOf("P");
       if (lastChar === -1 || lastChar < 7) {
@@ -39,8 +39,8 @@ class FidelityIntraday implements Intraday {
 
       if (lastChar === -1) return ""; // non-put and non-call?
 
-      let ret1 = ticker.slice(0, lastChar+1);
-      let ret2 = +ticker.slice(lastChar+1, ticker.length - 3);
+      const ret1 = ticker.slice(0, lastChar+1);
+      const ret2 = +ticker.slice(lastChar+1, ticker.length - 3);
 
       return "-" + ret1 + ret2.toString();
     } else {

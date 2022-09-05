@@ -1,6 +1,6 @@
 import logger from "../../Utils/logger";
 import StrategyBase from "../Strategy/StrategyBase";
-import VolumeAboveStrategy from "../Strategy/Volume_Above";
+import GreenBarStrategy from "../Strategy/Volume_Above";
 import TickerManager from "./TickerManager";
 
 class StrategyManager {
@@ -10,9 +10,9 @@ class StrategyManager {
   /* Ticker and options ticker manager */
   private tickerManager = new TickerManager();
 
-  public AddVolumeAboveStrategy(optionTicker: string) {
+  public GreenBarStrategy(optionTicker: string) {
     this.tickerManager.AddOptionTicker(optionTicker);
-    this.strategies.push(new VolumeAboveStrategy(optionTicker));
+    this.strategies.push(new GreenBarStrategy(optionTicker));
   }
 
   public getStrategy() {
@@ -28,7 +28,7 @@ class StrategyManager {
   }
 
   public Tick() {
-    console.log("StrategyManager::Tick() called!")
+    logger.info("StrategyManager::Tick() called!")
     this.tickerManager.Tick();
 
     this.strategies.forEach((elem) => elem.Tick());

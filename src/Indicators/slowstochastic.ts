@@ -34,17 +34,17 @@ async function SlowStochasticCalc(ticker: string) {
   const low: number[] = [];
   const timestamp: number[] = [];
 
-  item.chartData.forEach((item) => {
-    close.push(item.close);
-    high.push(item.high);
-    low.push(item.low);
-    timestamp.push(item.timestamp)
+  item.chartData.forEach((item2) => {
+    close.push(item2.close);
+    high.push(item2.high);
+    low.push(item2.low);
+    timestamp.push(item2.timestamp)
   });
 
-  var input: StochInput = {
-    low: low,
-    close: close,
-    high: high,
+  const input: StochInput = {
+    low,
+    close,
+    high,
     period: StochPeriod,
     signalPeriod: StochSignalPeriod,
   };
@@ -56,13 +56,13 @@ async function SlowStochasticCalc(ticker: string) {
     return;
   }
 
-  for (var i=0; i<StochSignalPeriod-1; i++) {
+  for (let i=0; i<StochSignalPeriod-1; i++) {
     result.unshift({k: StochDefault, d: StochDefault})
   }
 
   const result2: number[] = [];
-  for (var i=0; i<result.length; i++) {
-    result2.push(result[i].d)
+  for (const item3 of result) {
+    result2.push(item3.d)
   }
 
   if ( result2.length !== timestamp.length ) {

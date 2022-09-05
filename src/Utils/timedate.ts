@@ -18,7 +18,7 @@ export function getUnderlyingTickerFromOptionsTicker(opTick: string):string {
   if (opTick.length < 5)
     return opTick; // this is not an option ticker
 
-  let pos = opTick.search("2"); // good till 2029-12-31 :D
+  const pos = opTick.search("2"); // good till 2029-12-31 :D
   if (pos === -1){
     logger.error("getUnderlyingTickerFromOptionsTicker - cannot convert option ticker to underlying ticker!")
     return opTick; // not found, error!

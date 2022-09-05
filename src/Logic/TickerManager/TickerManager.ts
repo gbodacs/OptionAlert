@@ -63,7 +63,7 @@ class TickerManager {
       return; // todo market closed? report fail
     }
 
-    logger.info("TickerManager- Data downloaded successfully, adding to the store:"+ticker)
+    logger.info("TickerManager-Data downloaded successfully, adding to the store:"+ticker)
     Global.getInstance().getCandleStore().AddTickerDataByTicker(ticker, intraDay.open,intraDay.close,intraDay.low,intraDay.high,intraDay.volume,intraDay.timestamp );
   }
 

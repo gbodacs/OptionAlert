@@ -81,7 +81,7 @@ export default class ConstManager {
 
 
   Backup() {
-    let saveData: SaveData = {
+    const saveData: SaveData = {
       yahooKey: "",
       yahooHost: "",
       fidelityKey: "",

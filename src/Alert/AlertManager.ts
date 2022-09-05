@@ -29,7 +29,7 @@ class AlertManager {
     });
 
     if (ret === undefined) {
-      console.log("alert added");
+      logger.info("alert added");
       this.alertItems.push(new AlertItem(underlyingTicker, optionTicker, strategy, timestamp, text));
       return true;
     }

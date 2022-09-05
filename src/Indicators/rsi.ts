@@ -23,12 +23,12 @@ async function RsiCalc(ticker: string) {
   const close: number[] = [];
   const timestamp: number[] = [];
 
-  item.chartData.forEach((item) => {
-    close.push(item.close);
-    timestamp.push(item.timestamp)
+  item.chartData.forEach((item2) => {
+    close.push(item2.close);
+    timestamp.push(item2.timestamp)
   });
 
-  var input: RsiInput = {
+  const input: RsiInput = {
     values: close,
     period: RsiPeriod,
   };
@@ -39,7 +39,7 @@ async function RsiCalc(ticker: string) {
     logger.error("RsiCalc calculation error!")
   }
 
-  for (var i=0; i<RsiPeriod; i++) {
+  for (let i=0; i<RsiPeriod; i++) {
     result.unshift(RsiDefault)
   }
 
