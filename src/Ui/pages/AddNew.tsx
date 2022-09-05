@@ -32,7 +32,7 @@ function AddNew() {
   const addButtonHandler = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
 
-    Global.getInstance().getStrategyManager().AddVolumeAboveStrategy(option);
+    Global.getInstance().getStrategyManager().AddGreenBarStrategy(option);
     toast.info(option+" Added")
   }
 

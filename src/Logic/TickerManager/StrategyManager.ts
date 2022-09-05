@@ -10,9 +10,9 @@ class StrategyManager {
   /* Ticker and options ticker manager */
   private tickerManager = new TickerManager();
 
-  public GreenBarStrategy(optionTicker: string) {
+  public AddGreenBarStrategy(optionTicker: string) {
     this.tickerManager.AddOptionTicker(optionTicker);
-    this.strategies.push(new GreenBarStrategy(optionTicker));
+    this.strategies.push(new GreenBarStrategy(optionTicker)); // Todo: tickereket a stratekiakba tenni es onnan kiszedni, hogy mindig friss legyen
   }
 
   public getStrategy() {
