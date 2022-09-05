@@ -7,7 +7,11 @@ interface RsiInput {
   period: number; // RSI period
 }
 
-// todo: rebuild the whole SlowStochastic
+const RsiPeriod = 14
+const RsiDefault = 50
+const RsiName = "RSI"
+
+
 async function RsiCalc(ticker: string) {
   // Get data from store
   const item = Global.getInstance().getCandleStore().GetTickerDataByTicker(ticker);
@@ -17,19 +21,29 @@ async function RsiCalc(ticker: string) {
   }
 
   const close: number[] = [];
+  const timestamp: number[] = [];
 
   item.chartData.forEach((item) => {
     close.push(item.close);
+    timestamp.push(item.timestamp)
   });
 
   var input: RsiInput = {
     values: close,
-    period: 14,
+    period: RsiPeriod,
   };
 
   const result: number[] = RSI.calculate(input);
 
-  // Todo: finish this function
+  if (result.length+RsiPeriod !== item.chartData.length ) {
+    logger.error("RsiCalc calculation error!")
+  }
+
+  for (var i=0; i<RsiPeriod; i++) {
+    result.unshift(RsiDefault)
+  }
+
+  Global.getInstance().getIndicatorStore().AddIndicatorDataByTicker(ticker, RsiName, result, timestamp);
 }
 
 export { RsiCalc };
