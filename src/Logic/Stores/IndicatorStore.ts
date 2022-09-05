@@ -1,3 +1,4 @@
+import logger from "../../Utils/logger";
 import {IndicatorData, IndicatorType} from "./IndicatorStoreTypes"
 
 class IndicatorStore {
@@ -20,6 +21,10 @@ class IndicatorStore {
   }
 
   AddIndicatorDataByTicker(tickerName: string, indicatorName: string, ivalue2:number[], timestamp: number[]): boolean {
+    if (ivalue2.length !== timestamp.length) {
+      logger.error("AddIndicatorDataByTicker - value.len != timestamp.len")
+      return false;
+    }
     const item: IndicatorData | undefined = this.GetIndicatorDataByName(tickerName, indicatorName);
     if (item === undefined) {
       // Add new item
@@ -39,12 +44,12 @@ class IndicatorStore {
       return true;
     } else {
       // Ticker already present, add new data to it
-      const indData: IndicatorType[] = item.dataValues;
+      const inData: IndicatorType[] = item.dataValues;
       for (let i = 0; i < timestamp.length; i++) {
         if (this.TimestampPresent(tickerName, indicatorName, timestamp[i]))
           continue;
 
-          indData.push({ ivalue: ivalue2[i], timestamp: timestamp[i] });
+          inData.push({ ivalue: ivalue2[i], timestamp: timestamp[i] });
       }
     }
     return true;
