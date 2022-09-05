@@ -5,7 +5,7 @@ export interface VwapInput {
   price: number,
 }
 
-export function Vwap(inputData: VwapInput[]):number[] {
+export function VwapCalc(inputData: VwapInput[]):number[] {
   try {
     const p: number[] = [];
     const temp: VwapInput[] = [];
@@ -27,4 +27,4 @@ export function Vwap(inputData: VwapInput[]):number[] {
   }
 }
 
-module.exports = { Vwap };
+module.exports = { VwapCalc };

@@ -20,11 +20,12 @@ class IndicatorStore {
     return true;
   }
 
-  AddIndicatorDataByTicker(tickerName: string, indicatorName: string, ivalue2:number[], timestamp: number[]): boolean {
+  public AddIndicatorDataByTicker(tickerName: string, indicatorName: string, ivalue2:number[], timestamp: number[]): boolean {
     if (ivalue2.length !== timestamp.length) {
       logger.error("AddIndicatorDataByTicker - value.len != timestamp.len")
       return false;
     }
+
     const item: IndicatorData | undefined = this.GetIndicatorDataByName(tickerName, indicatorName);
     if (item === undefined) {
       // Add new item
@@ -55,7 +56,7 @@ class IndicatorStore {
     return true;
   }
 
-  GetIndicatorDataByName(ticker2: string, indicator2:string): IndicatorData | undefined {
+  private GetIndicatorDataByName(ticker2: string, indicator2:string): IndicatorData | undefined {
     return this.DataStore.find((item) => ticker2 === item.tickerName && indicator2 === item.indicatorName);
   }
 }

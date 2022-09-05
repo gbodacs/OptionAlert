@@ -1,6 +1,6 @@
 
 // todo: rebuild the whole SlowStochastic
-async function SlowStochastic(dataSeries:number) {/*
+async function SlowStochasticCalc(dataSeries:number) {/*
   try {
     //pass optional configuration object into the constructor
     let SlowStochastic = new SO({ periods: 14, smaPeriods: 3 });
@@ -27,4 +27,4 @@ async function SlowStochastic(dataSeries:number) {/*
   }*/
 }
 
-export { SlowStochastic };
+export { SlowStochasticCalc as SlowStochastic };

@@ -1,7 +1,7 @@
 import StrategyBase from "./StrategyBase";
 import Global from "../../Global/Global";
 import logger from "../../Utils/logger";
-import {Vwap, VwapInput} from "../../Indicators/vwap"
+import {VwapCalc, VwapInput} from "../../Indicators/vwap"
 
 
 // Current Option price is below VWAP.
@@ -35,7 +35,7 @@ class VwapAboveStrategy extends StrategyBase {
     }
 
     // Calculate VWAP
-    const vwapValues: number[] = Vwap(input);
+    const vwapValues: number[] = VwapCalc(input);
     if (vwapValues.length !== input.length) {
       logger.error("vwapValues calculation array size problem!")
     }
