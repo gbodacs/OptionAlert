@@ -40,7 +40,10 @@
     "platforms": [
       "android",
       "electron"
-    ]
+    ],
+    "plugins": {
+      "cordova-plugin-device": {}
+    }
   },
   "eslintConfig": {
     "extends": [
@@ -64,6 +67,7 @@
     "autoprefixer": "^10.4.8",
     "cordova-android": "^10.1.2",
     "cordova-electron": "^3.1.0",
+    "cordova-plugin-device": "^2.1.0",
     "daisyui": "^2.20.0",
     "postcss": "^8.4.14",
     "tailwindcss": "^3.1.7"

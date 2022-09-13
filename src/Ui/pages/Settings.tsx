@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import Global from "../../Global/Global";
-import VolumeAboveStrategy from "../../Logic/Strategy/Volume_Above";
 import closeDropDown from "../../Utils/closedropdown";
 
 export default function Settings() {

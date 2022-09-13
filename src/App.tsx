@@ -11,8 +11,13 @@ import NotFound from "./Ui/pages/NotFound";
 import Settings from "./Ui/pages/Settings";
 import WatchList from "./Ui/pages/WatchList";
 import AlertList from "./Ui/pages/AlertList";
+//import {getPlatform, ePlatforms} from "./Utils/platform";
 
 function App() {
+/*  const pls: ePlatforms = getPlatform();
+  {pls == ePlatforms.Web && (<p>Web</p>)}
+              {pls == ePlatforms.Mobile && (<p>Mobile</p>)}
+              {pls == ePlatforms.Desktop && (<p>Desktop</p>)}*/
   return (
         <>
           <Router>

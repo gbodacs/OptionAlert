@@ -12,6 +12,7 @@ function AddNew() {
   const [option, setOption] = useState<string>("");
   const [callChain, setCallChain] = useState<OptionInfo[]>([]);
   const [putChain, setPutChain] = useState<OptionInfo[]>([]);
+  const [strategyName, setStrategyName] = useState<string>("Green bar");
 
   useEffect( () => {
     closeDropDown();
@@ -28,13 +29,6 @@ function AddNew() {
   const handleExpirationChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setExpiration(e.target.value);
   };
-
-  const addButtonHandler = async (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-
-    Global.getInstance().getStrategyManager().AddGreenBarStrategy(option);
-    toast.info(option+" Added")
-  }
 
   const searchCallInTheMoneyIndex = (calls: OptionInfo[]): number => {
     for(let i=0; i<calls.length; i++) {
@@ -111,6 +105,30 @@ function AddNew() {
     closeDropDown();
   };
 
+  const handleStrategyChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const i = event.target.value;
+    setStrategyName(i)
+  }
+
+  /* Add new strategy */
+  const addButtonHandler = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+
+    switch (strategyName) {
+      case "Green bar":
+        Global.getInstance().getStrategyManager().AddGreenBarStrategy(option);
+        break;
+      case "RSI Stochastic above":
+        Global.getInstance().getStrategyManager().AddRsiStochAbove(option);
+        break;
+      case "RSI Stochastic below":
+        Global.getInstance().getStrategyManager().AddRsiStochBelow(option);
+        break;
+    }
+
+    toast.info(option+" Added")
+  }
+
   const renderExpiration:boolean = ticker !== "";
   const renderOptions:boolean = (putChain.length>0 && callChain.length>0);
   const renderStrategy:boolean = option !== "";
@@ -150,7 +168,7 @@ function AddNew() {
               <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-base-200 rounded-box w-52">
                 {callChain.map((item, index) => (
                   <li value={index} key={index} onClick={handleCallSelect}>
-                    <a>{item.contractSymbol}</a>
+                    <p>{item.contractSymbol}</p>
                   </li>
                 ))}
               </ul>
@@ -163,7 +181,7 @@ function AddNew() {
               <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-base-200 rounded-box w-52">
                 {putChain.map((item, index) => (
                   <li value={index} key={index} onClick={handlePutSelect}>
-                    <a>{item.contractSymbol}</a>
+                    <p>{item.contractSymbol}</p>
                   </li>
                 ))}
               </ul>
@@ -178,10 +196,10 @@ function AddNew() {
         <h1 className="text-2xl m-4">Select strategy</h1>
         <div className="grid grid-cols-1 xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 mb-8 gap-8">
           <div className="relative">
-          <select className="select w-full max-w-lg bg-base-300">
-            <option selected>Green bar</option>
-            <option disabled>VWAP under 20</option>
-            <option >RSI Stochastic</option>
+          <select value={strategyName} className="select w-full max-w-lg bg-base-300" onChange={handleStrategyChange}>
+            <option>Green bar</option>
+            <option>RSI Stochastic above</option>
+            <option>RSI Stochastic below</option>
           </select>
           </div>
         </div>
