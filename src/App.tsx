@@ -23,7 +23,8 @@ function App() {
           <Router>
             <div className="flex flex-col justify-between">
               <NavBar title="Option Alert" />
-            </div>
+              
+            
               <main className="container mx-auto px-3 pb-12">
                 <Routes>
                   <Route path="/" element={<AddNew />} />
@@ -35,7 +36,7 @@ function App() {
                   <Route path="/*" element={<NotFound />} />
                 </Routes>
               </main>
-            
+            </div>
           </Router>
           <ToastContainer />
         </>
