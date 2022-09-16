@@ -52,6 +52,7 @@ class TickerManager {
   async ApiCallTick(ticker: string, currTime: number) {
     /* Get Intraday info */
     logger.info("APICallTick with:"+ticker)
+
     const intraDay = await this.optionIntraday.GetIntradayData(ticker, this.lastGetTime, currTime);
     if (intraDay === undefined) {
       logger.error("TickerManager-Intraday response is empty:"+ticker);

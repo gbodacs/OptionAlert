@@ -46,7 +46,7 @@ async function RsiCalc(ticker: string) {
   Global.getInstance().getIndicatorStore().AddIndicatorDataByTicker(ticker, RsiName, result, timestamp);
 }
 
-export { RsiCalc };
+export { RsiCalc, RsiName };
 
 /*
 var inputRSI = {

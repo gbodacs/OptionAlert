@@ -56,7 +56,7 @@ class IndicatorStore {
     return true;
   }
 
-  private GetIndicatorDataByName(ticker2: string, indicator2:string): IndicatorData | undefined {
+  public GetIndicatorDataByName(ticker2: string, indicator2:string): IndicatorData | undefined {
     return this.DataStore.find((item) => ticker2 === item.tickerName && indicator2 === item.indicatorName);
   }
 }

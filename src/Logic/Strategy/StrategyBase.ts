@@ -12,11 +12,12 @@ abstract class StrategyBase {
 
   protected strategyName: string;
   private optionTicker: string;
-  protected lastTimestamp: number;
+  private lastTimestamp: number;
 
   getStrategyName() {return this.strategyName}
   getOptionTicker() {return this.optionTicker}
   getLastTimeStamp() {return this.lastTimestamp}
+  setLastTimeStamp(ts: number) {this.lastTimestamp = ts}
   getUnderlyingTicker(): string { return getUnderlyingTickerFromOptionsTicker(this.optionTicker) };
 
   abstract Tick():void;

@@ -5,11 +5,17 @@ interface SaveData  {
   fidelityKey: string,
   fidelityHost: string,
   optionChainLen: number,
-  refreshInterval: number
-  OptionVolumeStrategy:{
+  refreshInterval: number,
+  GreenBarStrategy: {
     volumeAlertValue: number,
-    stochasticAlertValue: number
-  }
+    stochasticAlertValue: number,
+  },
+  RsiStochStrategy: {
+    RsiMaxValue: number,
+    RsiMinValue: number,
+    StochasticMaxValue:number,
+    StochasticMinValue:number,
+   }
 }
 
 export default class ConstManager {
@@ -20,7 +26,7 @@ export default class ConstManager {
   /*
   DO NOT SAVE PROPERTIES!
    */
-  public Version = "0.1.0"
+  public Version = "0.1.3"
   /*
   DO NOT SAVE PROPERTIES!
    */
@@ -46,6 +52,8 @@ export default class ConstManager {
   private yahooKey = ""
   private yahooHost = ""
 
+  private isReleaseVersion = false;
+
   // Globals
   public getRefreshInterval(): number {return this.refreshInterval;}
   public getOptionChainLength(): number {return this.optionChainLength;}
@@ -53,6 +61,7 @@ export default class ConstManager {
   public getFidelityHost(): string {return this.fidelityHost;}
   public getYahooKey(): string {return this.yahooKey;}
   public getYahooHost(): string {return this.yahooHost;}
+  public getIsReleaseVersion() {return this.isReleaseVersion}
 
   public setRefreshInterval(i: number) {this.refreshInterval = i} // in millisecond
   public setOptionChainLength(i: number) {this.optionChainLength = i}
@@ -60,6 +69,7 @@ export default class ConstManager {
   public setFidelityHost(i: string) {this.fidelityHost = i}
   public setYahooKey(i: string) {this.yahooKey = i}
   public setYahooHost(i: string) {this.yahooHost = i}
+  
 
   // Green Bar Strategy
   public getVolumeAlertValue(): number {return this.volumeAlertValue;}
@@ -88,10 +98,16 @@ export default class ConstManager {
       fidelityHost: "",
       optionChainLen: 10,
       refreshInterval: 60000,
-      OptionVolumeStrategy: {
+      GreenBarStrategy: {
         volumeAlertValue: 1000,
         stochasticAlertValue: 20
-      }
+      },
+      RsiStochStrategy: {
+        RsiMaxValue: 70,
+        RsiMinValue: 30,
+        StochasticMaxValue: 80,
+        StochasticMinValue: 20,
+       }
     };
 
     saveData.yahooHost = this.yahooHost
@@ -100,8 +116,8 @@ export default class ConstManager {
     saveData.fidelityKey = this.fidelityKey
     saveData.optionChainLen = this.optionChainLength
     saveData.refreshInterval = this.refreshInterval
-    saveData.OptionVolumeStrategy.volumeAlertValue = this.volumeAlertValue
-    saveData.OptionVolumeStrategy.stochasticAlertValue = this.stochasticAlertValue
+    saveData.GreenBarStrategy.volumeAlertValue = this.volumeAlertValue
+    saveData.GreenBarStrategy.stochasticAlertValue = this.stochasticAlertValue
     
     localStorage.setItem(this.constManagerName, JSON.stringify(saveData))
   }
@@ -114,10 +130,16 @@ export default class ConstManager {
       fidelityHost: "",
       optionChainLen: 10,
       refreshInterval: 60000,
-      OptionVolumeStrategy: {
+      GreenBarStrategy: {
         volumeAlertValue: 1000,
         stochasticAlertValue: 20
-      }
+      },
+      RsiStochStrategy: {
+        RsiMaxValue: 70,
+        RsiMinValue: 30,
+        StochasticMaxValue: 80,
+        StochasticMinValue: 20,
+       }
     };
 
     const itemFromStorage = localStorage.getItem(this.constManagerName)
@@ -129,8 +151,12 @@ export default class ConstManager {
       this.setYahooKey(loadData.yahooKey)
       this.setOptionChainLength(loadData.optionChainLen)
       this.setRefreshInterval(loadData.refreshInterval)
-      this.setStochasticAlertValue(loadData.OptionVolumeStrategy.stochasticAlertValue)
-      this.setVolumeAlertValue(loadData.OptionVolumeStrategy.volumeAlertValue)
+      this.setStochasticAlertValue(loadData.GreenBarStrategy.stochasticAlertValue)
+      this.setVolumeAlertValue(loadData.GreenBarStrategy.volumeAlertValue)
+      this.setRsiMaxValue(loadData.RsiStochStrategy.RsiMaxValue)
+      this.setRsiMinValue(loadData.RsiStochStrategy.RsiMinValue)
+      this.setStochasticMaxValue(loadData.RsiStochStrategy.StochasticMaxValue)
+      this.setStochasticMinValue(loadData.RsiStochStrategy.StochasticMinValue)
     }
   }
 }
