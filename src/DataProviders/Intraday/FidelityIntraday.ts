@@ -1,6 +1,7 @@
 import { Intraday, IntradayData } from "./Intraday";
 import axios from "axios";
 import { AxiosResponse } from "axios";
+import rateLimit from 'axios-rate-limit';
 import { OptionChain, OptionChainData } from "../OptionChain/OptionChain";
 import logger from "../../Utils/logger";
 import { XMLParser, XMLValidator } from "fast-xml-parser";
@@ -90,11 +91,13 @@ class FidelityIntraday implements Intraday {
       let resp: AxiosResponse = {status:0, data:"", statusText:"", config: {}, headers:{}};
 
       if (Global.getInstance().getConstManager().getIsReleaseVersion()) {
-        resp = await axios.request(options); // Release version
-      } else {  // developer version
+        const http = rateLimit(axios.create(), { maxRequests: 4, perMilliseconds: 1000, maxRPS: 4 })
+        resp = await http.get(options.url, options);
+        //resp = await axios.request(options); // Release version
+      } else {  
         resp.status = 200;
         resp.statusText = "OK";
-        resp.data = testData;
+        resp.data = testData;   // developer version
       }
 
       const parser = new XMLParser();      
@@ -131,3 +134,6 @@ class FidelityIntraday implements Intraday {
 }
 
 export default FidelityIntraday;
+
+
+
