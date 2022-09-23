@@ -41,14 +41,21 @@ class StrategyManager {
   }
 
   public async Tick() {
-    logger.info("StrategyManager::Tick() called!")
+    logger.info("StrategyManager::Tick() start!")
     await this.tickerManager.Tick();
 
 
     this.strategies.forEach(async (elem) => {
       const num = await elem.Tick();
+      logger.info("--------")
+      logger.info("Strategy:"+ elem.getStrategyName())
+      logger.info("Option Ticker:"+ elem.getOptionTicker())
+      logger.info("Under Ticker:"+ elem.getUnderlyingTicker())
+      logger.info("Last Timestamp:"+ elem.getLastTimeStamp().toString())
+      logger.info("--------")
       Global.getInstance().getUiConstManager().addNumberOfAlerts(num);
     });
+    logger.info("StrategyManager::Tick() end!")
   }
 }
 
