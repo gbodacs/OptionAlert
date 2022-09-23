@@ -1,4 +1,4 @@
-import { useState } from 'react'
+/* import { useState } from 'react'
 
 function useLocalStorage(key, initialValue) {
   const [localStorageValue, setLocalStorageValue] = useState(() =>
@@ -24,3 +24,4 @@ function getLocalStorageValue(key, initialValue) {
 }
 
 export default useLocalStorage
+*/

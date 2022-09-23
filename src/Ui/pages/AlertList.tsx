@@ -22,6 +22,7 @@ function AlertList() {
 
   useEffect(() => {
     closeDropDown();
+    Global.getInstance().getUiConstManager().resetNumberOfAlerts();
     tick(); // Start the timer here!
   }, []);
 

@@ -1,8 +1,9 @@
-// import axios from "axios";
-// import { AxiosResponse } from "axios";
 import Global from "../../Global/Global";
 import logger from "../../Utils/logger";
 import { OptionChain, OptionChainData } from "./OptionChain";
+import { postApiCall } from "../GetApiCall";
+import { AxiosResponse } from "axios";
+import { ServerResponse } from "http";
 
 class YahooOptionChain implements OptionChain {
   async GetOptionChainElements(ticker: string, expiration: string): Promise<OptionChainData | undefined> {
@@ -10,10 +11,12 @@ class YahooOptionChain implements OptionChain {
     encodedParams.append("symbol", ticker);
     encodedParams.append("date", expiration);
 
-    const url = "https://yahoo-finance97.p.rapidapi.com/option-chain";
-
     const options = {
       method: "POST",
+      url: "https://yahoo-finance97.p.rapidapi.com/option-chain",
+      transformResponse: (res: ServerResponse) => {
+        return res;
+      },
       headers: {
         "content-type": "application/x-www-form-urlencoded",
         "X-RapidAPI-Key": Global.getInstance().getConstManager().getYahooKey(),
@@ -23,17 +26,17 @@ class YahooOptionChain implements OptionChain {
     };
 
     try {
-      const res = await fetch(url, options);
-      const data = await res.json();
+      const res = await postApiCall(options.url, options, 5, 1000);
+      const data:any = await res.data.json();
 
-      if (data.status === 200) {
+      if (res.status === 200) {
         const ret: OptionChainData = {
           calls: data.data.optioncalls,
           puts: data.data.optionputs,
         };
         return ret;
       } else {
-        throw new Error("Error: resp.status!=200 resp:" + data.message);
+        throw new Error("Error: resp.status!=200 resp:" + res.statusText);
       }
     } catch (error) {
       let message;

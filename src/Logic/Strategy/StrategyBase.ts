@@ -20,13 +20,13 @@ abstract class StrategyBase {
   setLastTimeStamp(ts: number) {this.lastTimestamp = ts}
   getUnderlyingTicker(): string { return getUnderlyingTickerFromOptionsTicker(this.optionTicker) };
 
-  abstract Tick():void;
+  abstract Tick(): Promise<number>; // returns the number of new alerts
 
   FindFistNewCandleIndex(): number {
     // get data from store
     const item = Global.getInstance().getCandleStore().GetTickerDataByTicker(this.optionTicker);
     if (item === undefined) {
-      logger.error("FindFistNewCandleIndex cannot get data");
+      logger.error("FindFistNewCandleIndex cannot find option ticker in the store!");
       return -1;
     }
 

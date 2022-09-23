@@ -22,6 +22,6 @@ export function getPlatform() : ePlatforms {
 
   if ( (pl === "WINDOWS") || (pl === "OS X") || (pl === "MAC OS X"))
     return ePlatforms.Desktop
-  
+
   return ePlatforms.Desktop
 }

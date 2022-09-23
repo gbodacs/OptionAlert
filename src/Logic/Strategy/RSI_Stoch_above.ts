@@ -10,37 +10,37 @@ class RsiStochAboveStrategy extends StrategyBase {
     super(optionTicker, "RSI Stoch above");
   }
 
-  async Tick(): Promise<void> {
-    logger.info("Above tick");
+  async Tick(): Promise<number> {
+    logger.info("---RSI_Stoch_above tick");
+    let newAlertNum = 0;
     // Find new data in Store
     const startIndex: number = this.FindFistNewCandleIndex();
     if (startIndex === -1) {
       logger.info("No new data in CandleStore?");
-      return;
+      return newAlertNum;
     }
 
-    //Calculate RSI
-    //Calculate Stochastic
+    // Calculate RSI
+    // Calculate Stochastic
     await Promise.all([RsiCalc(this.getOptionTicker()), SlowStochasticCalc(this.getOptionTicker())]);
 
     // Get data from store
     const rsiData = Global.getInstance().getIndicatorStore().GetIndicatorDataByName(this.getOptionTicker(), RsiName);
     if (rsiData === undefined) {
       logger.error("RsiStochAboveStrategy.Tick() indicator is not available in the store: " + this.getOptionTicker() + " " + RsiName);
-      return;
+      return newAlertNum;
     }
 
     const stochData = Global.getInstance().getIndicatorStore().GetIndicatorDataByName(this.getOptionTicker(), StochName);
     if (stochData === undefined) {
       logger.error("RsiStochAboveStrategy.Tick() indicator is not available in the store: " + this.getOptionTicker() + " " + StochName);
-      return;
+      return newAlertNum;
     }
 
     // Get Constants
     const aboveRsi = Global.getInstance().getConstManager().getRsiMaxValue();
     const aboveStoch = Global.getInstance().getConstManager().getStochasticMaxValue();
 
-    debugger;
     {
       // Debugger info to test array lengths
       const r = rsiData.dataValues.length;
@@ -48,7 +48,7 @@ class RsiStochAboveStrategy extends StrategyBase {
       // Get data from store
       const item = Global.getInstance().getCandleStore().GetTickerDataByTicker(this.getOptionTicker());
       if (item === undefined) {
-        return;
+        return newAlertNum;
       }
 
       if (r !== s && s !== item.chartData.length) {
@@ -65,17 +65,14 @@ class RsiStochAboveStrategy extends StrategyBase {
           logger.error("RsiStochAboveStrategy - different timestamps!");
         }
 
-        Global.getInstance()
-          .getAlertManager()
-          .addAlert(
-            this.getOptionTicker(),
-            this.strategyName,
-            elemR.timestamp,
-            " RSI is above the limit:" + aboveRsi + " Stochastic is above the limit:" + aboveStoch + " at the moment: " + getTimestampStringEST(elemR.timestamp)
-          );
+        Global.getInstance().getAlertManager().addAlert(this.getOptionTicker(), this.strategyName, elemR.timestamp,
+        " RSI value is: " + elemR.ivalue + " and it's above the limit: " + aboveRsi + " SlowStochastic value is: " +
+         elemS.ivalue + " and it's above the limit: " + aboveStoch + " at the moment: " + getTimestampStringEST(elemR.timestamp) );
+        newAlertNum++;
       }
     }
     this.setLastTimeStamp(rsiData.dataValues[rsiData.dataValues.length - 1].timestamp); // Last candle timestamp
+    return newAlertNum;
   }
 }
 

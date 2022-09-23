@@ -4,6 +4,7 @@ import GreenBarStrategy from "../Strategy/Green_bar";
 import TickerManager from "./TickerManager";
 import RsiStochAboveStrategy from "../Strategy/RSI_Stoch_above";
 import RsiStochBelowStrategy from "../Strategy/RSI_Stoch_below";
+import Global from "../../Global/Global";
 
 class StrategyManager {
   /* Strategies are here */
@@ -39,11 +40,15 @@ class StrategyManager {
     return this.tickerManager;
   }
 
-  public Tick() {
+  public async Tick() {
     logger.info("StrategyManager::Tick() called!")
-    this.tickerManager.Tick();
+    await this.tickerManager.Tick();
 
-    this.strategies.forEach((elem) => elem.Tick());
+
+    this.strategies.forEach(async (elem) => {
+      const num = await elem.Tick();
+      Global.getInstance().getUiConstManager().addNumberOfAlerts(num);
+    });
   }
 }
 

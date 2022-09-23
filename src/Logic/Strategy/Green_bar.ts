@@ -9,19 +9,21 @@ class GreenBarStrategy extends StrategyBase {
     super(optionTicker, "Green bar");
   }
 
-  Tick(): void {
+  Tick(): Promise<number> {
+    logger.info("---GreenBar tick");
+    let newAlertNum = 0;
     // Get data from store
     const item = Global.getInstance().getCandleStore().GetTickerDataByTicker(this.getOptionTicker());
     if (item === undefined) {
-      logger.error("VolumeAboveStrategy.Tick() ticker is not available in the store: " + this.getOptionTicker());
-      return;
+      logger.error("GreenBarStrategy.Tick() ticker is not available in the store: " + this.getOptionTicker());
+      return Promise.resolve(newAlertNum);
     }
 
     // Find new data in Store
     const startIndex: number = this.FindFistNewCandleIndex();
     if (startIndex === -1) {
       logger.info("No new data in CandleStore?");
-      return;
+      return  Promise.resolve(newAlertNum);
     }
 
     // Check data
@@ -38,9 +40,11 @@ class GreenBarStrategy extends StrategyBase {
             elem.timestamp, // todo add underlying ticker price
             " Volume " + elem.volume + " is above the limit:" + minVol + " at the moment: " + getTimestampStringEST(elem.timestamp)
           );
+          newAlertNum++;
       }
     }
     this.setLastTimeStamp(chartData[chartData.length - 1].timestamp); // Last candle timestamp
+    return Promise.resolve(newAlertNum);
   }
 }
 

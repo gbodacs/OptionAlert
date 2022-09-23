@@ -11,19 +11,21 @@ class VwapAboveStrategy extends StrategyBase {
     super(optionTicker, "Josh VWAP under");
   }
 
-  Tick():void {
+  Tick():Promise<number> {
+    const newAlertNum = 0;
+
     // Get chart data from store
     const item = Global.getInstance().getCandleStore().GetTickerDataByTicker(this.getOptionTicker());
     if (item === undefined) {
       logger.error("VwapAboveStrategy.Tick() cannot get data")
-      return;
+      return Promise.resolve(newAlertNum);
     }
 
     // Find new data in Store
     const startIndex: number = this.FindFistNewCandleIndex()
     if (startIndex === -1) {
       logger.error("No new data in CandleStore?");
-      return;
+      return Promise.resolve(newAlertNum);
     }
 
     // Create input data for VWAP calculation
@@ -42,9 +44,12 @@ class VwapAboveStrategy extends StrategyBase {
 
     // Check data
    /* for (const elem of vwapValues) {
-      if (elem < VWA)
+      if (elem < VWA) {
         logger.info("VwapAboveStrategy Alert! Volume above limit:"+elem.volume+ " at the moment: "+(new Date(elem.timestamp*1000).toLocaleString()) ); // todo: alert
+        newAlertNum++;
+      }
     }*/
+    return Promise.resolve(newAlertNum);
   }
 }
 

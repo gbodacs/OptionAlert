@@ -37,21 +37,21 @@ class TickerManager {
   private AddTicker(t: string): void {
     if (this.Tickers.indexOf(t) === -1) {
       this.Tickers.push(t);
-      logger.info("Ticker added:"+t)
+      logger.info("TickerManager - Ticker added:"+t)
     }
   }
 
   public AddOptionTicker(t: string): void {
     if (this.OptionTickers.indexOf(t) === -1) {
       this.OptionTickers.push(t);
-      logger.info("OptionTicker added:"+t)
+      logger.info("TickerManager - OptionTicker added:"+t)
     }
     this.AddTicker(getUnderlyingTickerFromOptionsTicker(t))
   }
 
   async ApiCallTick(ticker: string, currTime: number) {
     /* Get Intraday info */
-    logger.info("APICallTick with:"+ticker)
+    logger.info("TickerManager-APICallTick with: "+ticker)
 
     const intraDay = await this.optionIntraday.GetIntradayData(ticker, this.lastGetTime, currTime);
     if (intraDay === undefined) {
@@ -68,19 +68,25 @@ class TickerManager {
     Global.getInstance().getCandleStore().AddTickerDataByTicker(ticker, intraDay.open,intraDay.close,intraDay.low,intraDay.high,intraDay.volume,intraDay.timestamp );
   }
 
-  Tick(): void {
+  async Tick() {
     /* Set current time */
     const tempTime = getCurrTimeEST().getTime() / 1000;
 
+    const ret: Promise<void>[] = [];
+
     /* Refresh every Ticker data in the DataStore */
     this.Tickers.forEach((tick) => {
-      this.ApiCallTick(tick, tempTime)
-    });
+      ret.push( this.ApiCallTick(tick, tempTime))
+    })
 
     /* Refresh every OptionTicker data in the DataStore */
     this.OptionTickers.forEach((tick) => {
-      this.ApiCallTick(tick, tempTime)
-    });
+      ret.push( this.ApiCallTick(tick, tempTime))
+    })
+
+    logger.info("Downloading intraday data started...")
+    await Promise.all(ret)
+    logger.info("Downloading intraday data ready.")
 
     this.lastGetTime = tempTime;
   }

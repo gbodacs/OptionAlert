@@ -30,7 +30,7 @@ export default class ConstManager {
   /*
   DO NOT SAVE PROPERTIES!
    */
-  
+
   private constManagerName = "ConstManager"
 
   // Green Bar strategy
@@ -69,7 +69,7 @@ export default class ConstManager {
   public setFidelityHost(i: string) {this.fidelityHost = i}
   public setYahooKey(i: string) {this.yahooKey = i}
   public setYahooHost(i: string) {this.yahooHost = i}
-  
+
 
   // Green Bar Strategy
   public getVolumeAlertValue(): number {return this.volumeAlertValue;}

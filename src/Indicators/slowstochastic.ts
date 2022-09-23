@@ -56,7 +56,7 @@ async function SlowStochasticCalc(ticker: string) {
     return;
   }
 
-  for (let i=0; i<StochSignalPeriod-1; i++) {
+  for (let i=0; i<StochPeriod-1; i++) {
     result.unshift({k: StochDefault, d: StochDefault})
   }
 

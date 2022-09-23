@@ -7,7 +7,7 @@ class AlertItem {
     this.timestamp = timestamp;
     this.extraText = text;
   }
-  
+
   strategyName: string = "";
   underlyingTicker: string = "";
   optionTicker: string = "";
