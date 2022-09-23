@@ -3,12 +3,14 @@ import { FaBars, FaFileAlt, FaList, FaPlus } from "react-icons/fa";
 import { FaRegSun } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import Spinner from "./Spinner";
+import Global from "../../../Global/Global";
 
 type NavBarProps = {
   title: string;
 };
 
 const NavBar: FunctionComponent<NavBarProps> = ({ title }: NavBarProps) => {
+  const alerts = Global.getInstance().getUiConstManager().getNumberOfAlerts();
   return (
     <nav className="navbar mb-4 shadow-lg bg-neutral text-neutral-content">
       <div className="container mx-auto">
@@ -27,7 +29,10 @@ const NavBar: FunctionComponent<NavBarProps> = ({ title }: NavBarProps) => {
                   <Link to="/" className="btn btn-ghost btn-sm rounded-btn justify-start">Add new</Link>
                 </li>
                 <li>
-                  <Link to="/alertlist" className="btn btn-ghost btn-sm rounded-btn justify-start">Alert List</Link>
+                  <div className="indicator">
+                    <span className="indicator-item badge badge-secondary">{alerts}</span> 
+                    <Link to="/alertlist" className="btn btn-ghost btn-sm rounded-btn justify-start">Alert List</Link>
+                  </div>
                 </li>
                 <li>
                   <Link to="/watchlist" className="btn btn-ghost btn-sm rounded-btn justify-start">Watchlist</Link>
