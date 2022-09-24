@@ -1,27 +1,47 @@
-
-// Declare objects for Cordova
-declare let /*window: any,*/ device: any;
+import {GetSimplifiedPlatformString} from "./coredevice"
 
 export enum ePlatforms {
   Mobile,
   Desktop,
-  Web
+  Web,
+  Unknown
 }
 
-export function getPlatform() : ePlatforms {
-  if (typeof(device) === 'undefined' || !device ) {
-    return ePlatforms.Web;
-  }
+export function getPlatformEnum() : ePlatforms {
+  const platformString = GetSimplifiedPlatformString()
 
-  const pl = device.platform.toUpperCase()
-  if (pl === "BROWSER")
+  if (platformString === "BROWSER")
     return ePlatforms.Web;
 
-  if ( (pl === "ANDROID") || (pl === "IOS"))
+  if ( (platformString === "ANDROID") || (platformString === "IOS"))
     return ePlatforms.Mobile
 
-  if ( (pl === "WINDOWS") || (pl === "OS X") || (pl === "MAC OS X"))
+  if ( (platformString === "WINDOWS") || (platformString === "MAC OS X"))
     return ePlatforms.Desktop
 
-  return ePlatforms.Desktop
+  if (platformString === "UNKNOWN")
+    return ePlatforms.Unknown
+
+  return ePlatforms.Unknown
+}
+
+export function getPlatformString(): string {
+  const plat1 = getPlatformEnum()
+  let plaString = "Unknown"
+  switch (plat1)
+  {
+    case ePlatforms.Desktop:
+      plaString = "Desktop";
+      break;
+    case ePlatforms.Mobile:
+      plaString = "Mobile";
+      break;
+    case ePlatforms.Web:
+      plaString = "Web";
+      break;
+    case ePlatforms.Unknown:
+    default:
+      plaString = "Unknown";
+  }
+  return plaString;
 }

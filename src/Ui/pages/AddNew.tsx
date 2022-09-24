@@ -132,9 +132,10 @@ function AddNew() {
   const renderExpiration:boolean = ticker !== "";
   const renderOptions:boolean = (putChain.length>0 && callChain.length>0);
   const renderStrategy:boolean = option !== "";
-
+ 
   return (
     <>
+      <h1 className="text-3xl m-4">Add new alert item</h1>
       <h1 className="text-2xl m-4">Select underlying</h1>
       <div className="grid grid-cols-1 xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 mb-8 gap-8">
         <div className="relative">
