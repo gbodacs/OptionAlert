@@ -193,7 +193,7 @@ export default function Settings() {
       </tbody></table>
 
 
-      <h1 className="text-2xl m-4">"Green bar" strategy settings</h1>
+      <h1 className="text-2xl m-4">Green bar strategy settings</h1>
 
       <table className="table-auto w-full max-w-3xl"><tbody className="w-full max-w-3xl">
       <tr>
@@ -206,7 +206,7 @@ export default function Settings() {
       </tr>
       </tbody></table>
 
-      <h1 className="text-2xl m-4">"RSI Stochastic" strategy settings</h1>
+      <h1 className="text-2xl m-4">RSI Stochastic strategy settings</h1>
 
       <table className="table-auto w-full max-w-3xl"><tbody className="w-full max-w-3xl">
       <tr>
