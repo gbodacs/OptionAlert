@@ -44,7 +44,6 @@ class StrategyManager {
     logger.info("StrategyManager::Tick() start!")
     await this.tickerManager.Tick();
 
-
     this.strategies.forEach(async (elem) => {
       const num = await elem.Tick();
       logger.info("--------")

@@ -64,7 +64,7 @@ function AddNew() {
     const ret = await Global.getInstance().getStrategyManager().getTickerManager().getOptionChain(ticker, expiration);
     if (ret === undefined) {
       logger.error("Unable to download option chain!");
-      toast.error("Unable to download option chain! Please check your settings!")
+      toast.error("Unable to download option chain! Market closed or settings are missing.")
       return;
     }
 

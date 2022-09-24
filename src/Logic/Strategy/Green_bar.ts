@@ -23,7 +23,7 @@ class GreenBarStrategy extends StrategyBase {
     const startIndex: number = this.FindFistNewCandleIndex();
     if (startIndex === -1) {
       logger.info("No new data in CandleStore?");
-      return  Promise.resolve(newAlertNum);
+      return Promise.resolve(newAlertNum);
     }
 
     // Check data
@@ -32,9 +32,7 @@ class GreenBarStrategy extends StrategyBase {
     for (let i = startIndex; i < chartData.length; i++) {
       const elem = chartData[i];
       if (elem.volume > minVol) {
-        Global.getInstance()
-          .getAlertManager()
-          .addAlert(
+        Global.getInstance().getAlertManager().addAlert(
             item.ticker,
             this.strategyName,
             elem.timestamp, // todo add underlying ticker price

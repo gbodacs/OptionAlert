@@ -37,14 +37,14 @@ class TickerManager {
   private AddTicker(t: string): void {
     if (this.Tickers.indexOf(t) === -1) {
       this.Tickers.push(t);
-      logger.info("TickerManager - Ticker added:"+t)
+      logger.info("TickerManager-Ticker added:"+t)
     }
   }
 
   public AddOptionTicker(t: string): void {
     if (this.OptionTickers.indexOf(t) === -1) {
       this.OptionTickers.push(t);
-      logger.info("TickerManager - OptionTicker added:"+t)
+      logger.info("TickerManager-OptionTicker added:"+t)
     }
     this.AddTicker(getUnderlyingTickerFromOptionsTicker(t))
   }
