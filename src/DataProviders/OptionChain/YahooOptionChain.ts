@@ -2,7 +2,6 @@ import Global from "../../Global/Global";
 import logger from "../../Utils/logger";
 import { OptionChain, OptionChainData } from "./OptionChain";
 import { postApiCall } from "../GetApiCall";
-import { AxiosResponse } from "axios";
 import { ServerResponse } from "http";
 
 class YahooOptionChain implements OptionChain {

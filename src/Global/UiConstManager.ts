@@ -1,4 +1,4 @@
-import logger from "../Utils/logger";
+// import logger from "../Utils/logger";
 
 export default class UiConstManager {
   private numberOfAlerts: number = 0;

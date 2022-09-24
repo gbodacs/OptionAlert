@@ -1,8 +1,6 @@
-import { FunctionComponent, useEffect, useState } from "react";
-import { FaBars, FaFileAlt, FaBell } from "react-icons/fa";
-import { FaRegSun } from "react-icons/fa";
+import { FunctionComponent } from "react";
+import { FaBars,FaBell } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import Spinner from "./Spinner";
 import Global from "../../../Global/Global";
 
 type NavBarProps = {

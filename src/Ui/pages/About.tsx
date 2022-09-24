@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
-import {useNavigate, useLocation} from "react-router-dom"
+import {useNavigate } from "react-router-dom"
 import Global from "../../Global/Global";
 import closeDropDown from "../../Utils/closedropdown";
 
 export default function About() {
   const navigate = useNavigate();
-  const location = useLocation();
+  // const location = useLocation();
 
   useEffect(() => {
     closeDropDown();

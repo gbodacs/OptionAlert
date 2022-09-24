@@ -1,7 +1,7 @@
 import logger from "../../Utils/logger";
 import Global from "../../Global/Global";
 import YahooOptionChain from "../../DataProviders/OptionChain/YahooOptionChain";
-import YahooIntraday from "../../DataProviders/Intraday/YahooIntraday";
+// import YahooIntraday from "../../DataProviders/Intraday/YahooIntraday";
 import FidelityIntraday from "../../DataProviders/Intraday/FidelityIntraday";
 
 import { getCurrTimeEST, getUnderlyingTickerFromOptionsTicker } from "../../Utils/timedate";
