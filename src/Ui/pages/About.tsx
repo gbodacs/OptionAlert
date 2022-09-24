@@ -12,11 +12,11 @@ export default function About() {
   }, []);
 
   return (
-    <div className="card w-96 bg-base-300 shadow-xl m-8">
+    <div className="card mx-auto bg-base-200 shadow-xl m-8">
       <div className="card-body">
         <h2 className="card-title">Option Alert</h2>
-        <p>This program sends an alarm when an event that meets the set alarm conditions occurs.</p>
-        <p><b>Developer:</b> AppVagance</p>
+        <p>Set your alarm criteria to an option based on volume or any indicator. this program sends an alert when the preset conditions are met.</p>
+        <p><b>Developed by:</b> AppVagance</p>
         <p><b>Version:</b> {Global.getInstance().getConstManager().Version}</p>
         <div className="card-actions justify-evenly mt-4">
           <button className="btn btn-primary" onClick={() => navigate("/settings")}>Settings</button>
