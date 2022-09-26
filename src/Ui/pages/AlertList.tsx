@@ -10,20 +10,9 @@ import { FaTrash, FaInfoCircle } from "react-icons/fa";
 function AlertList() {
   const [update, setUpdate] = useState<number>(1);
 
-  const tick = () => {
-    logger.info("--- AlertList::tick called()!")
-    Global.getInstance().getStrategyManager().Tick();
-
-    setTimeout(() => {
-      tick();
-      setUpdate(update+1);
-    }, Global.getInstance().getConstManager().getRefreshInterval());
-  }
-
   useEffect(() => {
     closeDropDown();
     Global.getInstance().getUiConstManager().resetNumberOfAlerts();
-    tick(); // Start the timer here!
   }, []);
 
   const deleteButtonHandler = async (event: React.MouseEvent<HTMLButtonElement>) => {

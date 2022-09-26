@@ -14,8 +14,25 @@ function AddNew() {
   const [putChain, setPutChain] = useState<OptionInfo[]>([]);
   const [strategyName, setStrategyName] = useState<string>("Green bar");
 
+  const [update, setUpdate] = useState<number>(1);
+
+  const tick = () => {
+    logger.info("=== Main_tick called()!")
+    Global.getInstance().getStrategyManager().Tick();
+
+    setTimeout(() => {
+      tick();
+      setUpdate(update+1);
+    }, Global.getInstance().getConstManager().getRefreshInterval());
+  }
+
   useEffect( () => {
     closeDropDown();
+    if (!Global.getInstance().getUiConstManager().isTickInitReady()) {
+      logger.info("--- Start ticker timer!")
+      tick(); // Start the timer here!
+      Global.getInstance().getUiConstManager().setTickInitReady();
+    }
   }, [])
 
   const handleTickerChange = (e: React.ChangeEvent<HTMLInputElement>) => {
