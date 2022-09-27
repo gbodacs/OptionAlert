@@ -3,7 +3,9 @@ import IndicatorStore from "../Logic/Stores/IndicatorStore";
 import AlertManager from "../Alert/AlertManager";
 import ConstManager from "./ConstManager"
 import UiConstManager from "./UiConstManager"
+import ThemeManager from "./ThemeManager"
 import StrategyManager from "../Logic/TickerManager/StrategyManager";
+import { Theme } from "react-daisyui";
 
 
 export default class Global {
@@ -13,7 +15,9 @@ export default class Global {
   private alertManager: AlertManager;
   private constManager: ConstManager;
   private uiConstManager: UiConstManager;
+  private themeManager: ThemeManager;
   private strategyManager: StrategyManager;
+  
 
   private constructor() {
     this.candleStore = new CandleStore();
@@ -21,6 +25,7 @@ export default class Global {
     this.alertManager = new AlertManager(false, true, true);
     this.constManager = new ConstManager();
     this.uiConstManager = new UiConstManager();
+    this.themeManager = new ThemeManager();
     this.strategyManager = new StrategyManager();
   }
 
@@ -36,5 +41,6 @@ export default class Global {
   public getAlertManager() {return this.alertManager;}
   public getConstManager() {return this.constManager;}
   public getUiConstManager() {return this.uiConstManager;}
+  public getThemeManager() {return this.themeManager;}
   public getStrategyManager() {return this.strategyManager;}
 }

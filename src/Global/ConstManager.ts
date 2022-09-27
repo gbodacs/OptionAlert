@@ -15,7 +15,8 @@ interface SaveData  {
     RsiMinValue: number,
     StochasticMaxValue:number,
     StochasticMinValue:number,
-   }
+   },
+  themeName:string
 }
 
 export default class ConstManager {
@@ -43,6 +44,8 @@ export default class ConstManager {
   private stochasticMinValue = 20;
   private stochasticMaxValue = 80;
 
+  private themeName = "dark";
+
   private optionChainLength = 10;
   private refreshInterval = 20000; // 20 sec refresh
 //
@@ -61,6 +64,7 @@ export default class ConstManager {
   public getFidelityHost(): string {return this.fidelityHost;}
   public getYahooKey(): string {return this.yahooKey;}
   public getYahooHost(): string {return this.yahooHost;}
+  public getThemeName(): string {return this.themeName;}
   public getIsReleaseVersion() {return this.isReleaseVersion}
 
   public setRefreshInterval(i: number) {this.refreshInterval = i} // in millisecond
@@ -68,6 +72,7 @@ export default class ConstManager {
   public setFidelityKey(i: string) {this.fidelityKey = i}
   public setFidelityHost(i: string) {this.fidelityHost = i}
   public setYahooKey(i: string) {this.yahooKey = i}
+  public setThemeName(i: string) {this.themeName = i}
   public setYahooHost(i: string) {this.yahooHost = i}
 
 
@@ -107,7 +112,8 @@ export default class ConstManager {
         RsiMinValue: 30,
         StochasticMaxValue: 80,
         StochasticMinValue: 20,
-       }
+       },
+      themeName: "dark"
     };
 
     saveData.yahooHost = this.yahooHost
@@ -118,6 +124,11 @@ export default class ConstManager {
     saveData.refreshInterval = this.refreshInterval
     saveData.GreenBarStrategy.volumeAlertValue = this.volumeAlertValue
     saveData.GreenBarStrategy.stochasticAlertValue = this.stochasticAlertValue
+    saveData.RsiStochStrategy.RsiMaxValue = this.rsiMaxValue
+    saveData.RsiStochStrategy.RsiMinValue = this.rsiMinValue
+    saveData.RsiStochStrategy.StochasticMaxValue = this.stochasticMaxValue
+    saveData.RsiStochStrategy.StochasticMinValue = this.stochasticMinValue
+    saveData.themeName = this.themeName
     
     localStorage.setItem(this.constManagerName, JSON.stringify(saveData))
   }
@@ -139,7 +150,8 @@ export default class ConstManager {
         RsiMinValue: 30,
         StochasticMaxValue: 80,
         StochasticMinValue: 20,
-       }
+       },
+      themeName: "dark"
     };
 
     const itemFromStorage = localStorage.getItem(this.constManagerName)
@@ -157,6 +169,7 @@ export default class ConstManager {
       this.setRsiMinValue(loadData.RsiStochStrategy.RsiMinValue)
       this.setStochasticMaxValue(loadData.RsiStochStrategy.StochasticMaxValue)
       this.setStochasticMinValue(loadData.RsiStochStrategy.StochasticMinValue)
+      this.setThemeName(loadData.themeName)
     }
   }
 }

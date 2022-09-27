@@ -153,7 +153,7 @@ function AddNew() {
   return (
     <>
       <h1 className="text-3xl m-4">Add new alert item</h1>
-      <h1 className="text-2xl m-4">Select underlying</h1>
+      <h1 className="text-2xl m-4">Please enter the underlying ticker</h1>
       <div className="grid grid-cols-1 xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 mb-8 gap-8">
         <div className="relative">
           <input type="text" className="w-full pr-40 bg-base-300 input input-md text-lg" placeholder="Underlying ticker" value={ticker} onChange={handleTickerChange} />

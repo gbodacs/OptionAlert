@@ -20,10 +20,10 @@ export default function Settings() {
   const [rsiMinValue, setRsiMinValue] = useState<number>(30);
   const [rsiMaxValue, setRsiMaxValue] = useState<number>(70);
 
-
   useEffect(() => {
     closeDropDown();
     loadData();
+    mySetTheme(Global.getInstance().getConstManager().getThemeName())
   }, []);
 
   const saveButtonHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -44,6 +44,8 @@ export default function Settings() {
     Global.getInstance().getConstManager().setStochasticMinValue(stochasticMinValue)
     Global.getInstance().getConstManager().setRsiMaxValue(rsiMaxValue)
     Global.getInstance().getConstManager().setRsiMinValue(rsiMinValue)
+
+    //Global.getInstance().getConstManager().setThemeName(themeName)
 
     Global.getInstance().getConstManager().Backup()
 
@@ -71,6 +73,8 @@ export default function Settings() {
 
     setVolumeAlertValue(Global.getInstance().getConstManager().getVolumeAlertValue())
     setStochasticAlertValue(Global.getInstance().getConstManager().getStochasticAlertValue())
+
+    // setThemeName(Global.getInstance().getConstManager().getThemeName())
   }
 
   const fidelityKeyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -159,6 +163,20 @@ export default function Settings() {
     setRsiMinValue( interval );
   };
 
+  const mySetTheme = (t: string) => {
+    document.getElementsByTagName('html')[0].setAttribute('data-theme', t)
+    //window.localStorage.setItem('sb-react-daisyui-preview-theme', t)
+    Global.getInstance().getConstManager().setThemeName(t);
+  }
+
+  const toggleTheme = () =>{
+    if (Global.getInstance().getConstManager().getThemeName() === "corporate") {
+      mySetTheme("dark")
+    } else {
+      mySetTheme("corporate")
+    }
+  }
+
   return (
     <>
     <h1 className="text-2xl m-4">Global Settings</h1>
@@ -189,6 +207,13 @@ export default function Settings() {
       <tr>
         <th align= "left" className="m-1 w-20 max-w-lg"><label className="m-1">Refresh interval</label></th>
         <th align= "left" className="m-1 w-20 max-w-lg"><input type="number" className="bg-base-300 m-2 input input-2xl w-24 text-normal" placeholder="Refresh interval" value={refreshInterval} onChange={refreshIntervalChange} /> sec</th>
+      </tr>
+      <tr>
+        <th align= "left" className="m-1 w-20 max-w-lg"><label className="m-1">Toggle dark/light theme</label></th>
+        <th align= "left" className="m-1 w-20 max-w-lg">
+        {Global.getInstance().getConstManager().getThemeName() === "dark" && (<input type="checkbox" className="bg-base-300 m-2 w-12 toggle toggle-secondary" checked onChange={() => toggleTheme()} />)}
+        {Global.getInstance().getConstManager().getThemeName() !== "dark" && (<input type="checkbox" className="bg-base-300 m-2 w-12 toggle toggle-secondary" onChange={() => toggleTheme()} />)}
+        </th>
       </tr>
       </tbody></table>
 

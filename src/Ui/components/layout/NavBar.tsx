@@ -1,7 +1,8 @@
-import { FunctionComponent } from "react";
+import { FunctionComponent, useState } from "react";
 import { FaBars,FaBell } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import Global from "../../../Global/Global";
+import { useTheme } from 'react-daisyui'
 
 type NavBarProps = {
   title: string;
@@ -10,8 +11,8 @@ type NavBarProps = {
 const NavBar: FunctionComponent<NavBarProps> = ({ title }: NavBarProps) => {
   const alertNum: number = Global.getInstance().getUiConstManager().getNumberOfAlerts();
   const isAlert: boolean = (alertNum > 0);
-
-  return (
+  
+    return (
     <nav className="navbar mb-4 shadow-lg bg-neutral text-neutral-content">
       <div className="container mx-auto">
         <div className="flex-none">
@@ -19,7 +20,7 @@ const NavBar: FunctionComponent<NavBarProps> = ({ title }: NavBarProps) => {
         <div className="dropdown">
               <label tabIndex={0} className="btn btn-ghost rounded-btn"><FaBars className="inline text-3xl pr-2"/>{title}</label>
               
-              <ul tabIndex={0} className="menu dropdown-content p-2 shadow bg-base-300 rounded-box w-52 m-4">
+              <ul tabIndex={0} className="menu dropdown-content p-2 shadow bg-info-content rounded-box w-52 m-4">
                 <li>
                   <Link to="/" className="btn btn-ghost rounded-btn justify-start align-middle">Add new</Link>
                 </li>
@@ -43,11 +44,11 @@ const NavBar: FunctionComponent<NavBarProps> = ({ title }: NavBarProps) => {
           <div className="flex justify-end">
             { isAlert && ( <div className="indicator">
                 <span className="indicator-item badge badge-secondary">{alertNum}</span>
-                <Link to="/alertlist" className="btn btn-ghost rounded-btn bg-base-200 justify-start align-middle"><FaBell className="inline text-2xl"/></Link>
+                <Link to="/alertlist" className="btn btn-ghost rounded-btn bg-info-content justify-start align-middle"><FaBell className="inline text-2xl"/></Link>
                 </div> )}
 
             { !isAlert && (
-              <Link to="/alertlist" className="btn btn-ghost rounded-btn bg-base-200 justify-start align-middle"><FaBell className="inline text-2xl"/></Link>
+              <Link to="/alertlist" className="btn btn-ghost rounded-btn bg-info-content justify-start align-middle"><FaBell className="inline text-2xl"/></Link>
             )}
           </div>
         </div>
