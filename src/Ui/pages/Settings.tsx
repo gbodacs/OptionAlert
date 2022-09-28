@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import Global from "../../Global/Global";
 import closeDropDown from "../../Utils/closedropdown";
+import logger from "../../Utils/logger";
 
 export default function Settings() {
   const [fidelityKey, setFidelityKey] = useState<string>("");
@@ -20,10 +21,11 @@ export default function Settings() {
   const [rsiMinValue, setRsiMinValue] = useState<number>(30);
   const [rsiMaxValue, setRsiMaxValue] = useState<number>(70);
 
+  const [theme, setTheme] = useState<number>(1); // setTheme repaint 
+
   useEffect(() => {
     closeDropDown();
     loadData();
-    mySetTheme(Global.getInstance().getConstManager().getThemeName())
   }, []);
 
   const saveButtonHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -164,17 +166,8 @@ export default function Settings() {
   };
 
   const mySetTheme = (t: string) => {
-    document.getElementsByTagName('html')[0].setAttribute('data-theme', t)
-    //window.localStorage.setItem('sb-react-daisyui-preview-theme', t)
-    Global.getInstance().getConstManager().setThemeName(t);
-  }
-
-  const toggleTheme = () =>{
-    if (Global.getInstance().getConstManager().getThemeName() === "corporate") {
-      mySetTheme("dark")
-    } else {
-      mySetTheme("corporate")
-    }
+    Global.getInstance().getThemeManager().setCurrentTheme(t);
+    setTheme(theme+1)
   }
 
   return (
@@ -211,8 +204,8 @@ export default function Settings() {
       <tr>
         <th align= "left" className="m-1 w-20 max-w-lg"><label className="m-1">Toggle dark/light theme</label></th>
         <th align= "left" className="m-1 w-20 max-w-lg">
-        {Global.getInstance().getConstManager().getThemeName() === "dark" && (<input type="checkbox" className="bg-base-300 m-2 w-12 toggle toggle-secondary" checked onChange={() => toggleTheme()} />)}
-        {Global.getInstance().getConstManager().getThemeName() !== "dark" && (<input type="checkbox" className="bg-base-300 m-2 w-12 toggle toggle-secondary" onChange={() => toggleTheme()} />)}
+        {Global.getInstance().getThemeManager().getCurrentTheme() === "dark" && (<input type="checkbox" className="bg-base-300 m-2 w-12 toggle toggle-secondary" checked onChange={() => mySetTheme("corporate")} />)}
+        {Global.getInstance().getThemeManager().getCurrentTheme() !== "dark" && (<input type="checkbox" className="bg-base-300 m-2 w-12 toggle toggle-secondary" onChange={() => mySetTheme("dark")} />)}
         </th>
       </tr>
       </tbody></table>
@@ -252,8 +245,8 @@ export default function Settings() {
       </tr>
       </tbody></table>
 
-      <button onClick={saveButtonHandler} className="btn w-full my-4 btn-primary">Backup to local</button>
-      <button onClick={loadButtonHandler} className="btn w-full my-4 btn-primary">Restore from local</button>
+      <button onClick={saveButtonHandler} className="btn w-full my-4 btn-primary">Save settings</button>
+      <button onClick={loadButtonHandler} className="btn w-full my-4 btn-primary">Reload settings</button>
     </>
   );
 }

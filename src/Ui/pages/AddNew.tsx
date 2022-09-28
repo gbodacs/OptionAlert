@@ -14,7 +14,7 @@ function AddNew() {
   const [putChain, setPutChain] = useState<OptionInfo[]>([]);
   const [strategyName, setStrategyName] = useState<string>("Green bar");
 
-  const [update, setUpdate] = useState<number>(1);
+  const [update, setUpdate] = useState<number>(1); // Force paint after tick() and themeload
 
   const tick = () => {
     logger.info("=== Main_tick called()!")
@@ -28,6 +28,8 @@ function AddNew() {
 
   useEffect( () => {
     closeDropDown();
+    Global.getInstance().getThemeManager().setCurrentTheme(Global.getInstance().getThemeManager().getCurrentTheme())
+    setUpdate(update-1)
     if (!Global.getInstance().getUiConstManager().isTickInitReady()) {
       logger.info("--- Start ticker timer!")
       tick(); // Start the timer here!
