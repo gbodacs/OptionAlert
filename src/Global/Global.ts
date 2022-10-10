@@ -5,7 +5,6 @@ import ConstManager from "./ConstManager"
 import UiConstManager from "./UiConstManager"
 import ThemeManager from "./ThemeManager"
 import StrategyManager from "../Logic/TickerManager/StrategyManager";
-import { Theme } from "react-daisyui";
 
 
 export default class Global {
