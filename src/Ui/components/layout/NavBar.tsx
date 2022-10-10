@@ -2,7 +2,6 @@ import { FunctionComponent, useState } from "react";
 import { FaBars,FaBell } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import Global from "../../../Global/Global";
-import { useTheme } from 'react-daisyui'
 
 type NavBarProps = {
   title: string;

@@ -166,7 +166,7 @@ export default function Settings() {
   };
 
   const mySetTheme = (t: string) => {
-    Global.getInstance().getThemeManager().setCurrentTheme(t);
+    Global.getInstance().getConstManager().setThemeName(t);
     setTheme(theme+1)
   }
 
@@ -204,8 +204,8 @@ export default function Settings() {
       <tr>
         <th align= "left" className="m-1 w-20 max-w-lg"><label className="m-1">Toggle dark/light theme</label></th>
         <th align= "left" className="m-1 w-20 max-w-lg">
-        {Global.getInstance().getThemeManager().getCurrentTheme() === "dark" && (<input type="checkbox" className="bg-base-300 m-2 w-12 toggle toggle-secondary" checked onChange={() => mySetTheme("corporate")} />)}
-        {Global.getInstance().getThemeManager().getCurrentTheme() !== "dark" && (<input type="checkbox" className="bg-base-300 m-2 w-12 toggle toggle-secondary" onChange={() => mySetTheme("dark")} />)}
+        {Global.getInstance().getConstManager().getThemeName() === "dark" && (<input type="checkbox" className="bg-base-300 m-2 w-12 toggle toggle-secondary" checked onChange={() => mySetTheme("corporate")} />)}
+        {Global.getInstance().getConstManager().getThemeName() !== "dark" && (<input type="checkbox" className="bg-base-300 m-2 w-12 toggle toggle-secondary" onChange={() => mySetTheme("dark")} />)}
         </th>
       </tr>
       </tbody></table>

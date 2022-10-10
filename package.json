@@ -1,7 +1,7 @@
 {
   "displayName": "Option Alert",
   "name": "com.appvag.optionalert",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "homepage": "./",
   "description": "An app to send option alerts.",
   "private": true,

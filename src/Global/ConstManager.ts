@@ -72,7 +72,7 @@ export default class ConstManager {
   public setFidelityKey(i: string) {this.fidelityKey = i}
   public setFidelityHost(i: string) {this.fidelityHost = i}
   public setYahooKey(i: string) {this.yahooKey = i}
-  public setThemeName(i: string) {this.themeName1 = i}
+  public setThemeName(i: string) {this.themeName1 = i;document.getElementsByTagName('html')[0].setAttribute('data-theme', i)}
   public setYahooHost(i: string) {this.yahooHost = i}
 
 
@@ -130,9 +130,7 @@ export default class ConstManager {
     saveData.RsiStochStrategy.StochasticMaxValue = this.stochasticMaxValue
     saveData.RsiStochStrategy.StochasticMinValue = this.stochasticMinValue
     
-    const u=JSON.stringify(saveData);
-    localStorage.setItem(this.constManagerName, u)
-    logger.info(u);
+    localStorage.setItem(this.constManagerName, JSON.stringify(saveData))
   }
 
   Restore() {

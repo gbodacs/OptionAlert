@@ -28,7 +28,6 @@ function AddNew() {
 
   useEffect( () => {
     closeDropDown();
-    Global.getInstance().getThemeManager().setCurrentTheme(Global.getInstance().getThemeManager().getCurrentTheme())
     setUpdate(update-1)
     if (!Global.getInstance().getUiConstManager().isTickInitReady()) {
       logger.info("--- Start ticker timer!")
@@ -83,7 +82,7 @@ function AddNew() {
     const ret = await Global.getInstance().getStrategyManager().getTickerManager().getOptionChain(ticker, expiration);
     if (ret === undefined) {
       logger.error("Unable to download option chain!");
-      toast.error("Unable to download option chain! Market closed or settings are missing.")
+      toast.error("Unable to download option chain! Market closed, settings are missing or API quota exceed.")
       return;
     }
 
