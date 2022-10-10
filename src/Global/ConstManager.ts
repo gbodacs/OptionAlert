@@ -1,3 +1,4 @@
+import logger from "../Utils/logger";
 
 interface SaveData  {
   yahooKey:string,
@@ -6,6 +7,7 @@ interface SaveData  {
   fidelityHost: string,
   optionChainLen: number,
   refreshInterval: number,
+  theme:string,
   GreenBarStrategy: {
     volumeAlertValue: number,
     stochasticAlertValue: number,
@@ -15,8 +17,7 @@ interface SaveData  {
     RsiMinValue: number,
     StochasticMaxValue:number,
     StochasticMinValue:number,
-   },
-  themeName:string
+  },
 }
 
 export default class ConstManager {
@@ -28,6 +29,7 @@ export default class ConstManager {
   DO NOT SAVE PROPERTIES!
    */
   public Version = "0.1.3"
+  private isReleaseVersion = false;
   /*
   DO NOT SAVE PROPERTIES!
    */
@@ -44,7 +46,7 @@ export default class ConstManager {
   private stochasticMinValue = 20;
   private stochasticMaxValue = 80;
 
-  private themeName = "dark";
+  private themeName1 = "dark";
 
   private optionChainLength = 10;
   private refreshInterval = 20000; // 20 sec refresh
@@ -53,9 +55,7 @@ export default class ConstManager {
   private fidelityHost = ""
 
   private yahooKey = ""
-  private yahooHost = ""
-
-  private isReleaseVersion = false;
+  private yahooHost = ""  
 
   // Globals
   public getRefreshInterval(): number {return this.refreshInterval;}
@@ -64,7 +64,7 @@ export default class ConstManager {
   public getFidelityHost(): string {return this.fidelityHost;}
   public getYahooKey(): string {return this.yahooKey;}
   public getYahooHost(): string {return this.yahooHost;}
-  public getThemeName(): string {return this.themeName;}
+  public getThemeName(): string {return this.themeName1;}
   public getIsReleaseVersion() {return this.isReleaseVersion}
 
   public setRefreshInterval(i: number) {this.refreshInterval = i} // in millisecond
@@ -72,7 +72,7 @@ export default class ConstManager {
   public setFidelityKey(i: string) {this.fidelityKey = i}
   public setFidelityHost(i: string) {this.fidelityHost = i}
   public setYahooKey(i: string) {this.yahooKey = i}
-  public setThemeName(i: string) {this.themeName = i}
+  public setThemeName(i: string) {this.themeName1 = i}
   public setYahooHost(i: string) {this.yahooHost = i}
 
 
@@ -97,23 +97,23 @@ export default class ConstManager {
 
   Backup() {
     const saveData: SaveData = {
-      yahooKey: "",
-      yahooHost: "",
-      fidelityKey: "",
-      fidelityHost: "",
-      optionChainLen: 10,
-      refreshInterval: 60000,
-      GreenBarStrategy: {
-        volumeAlertValue: 1000,
-        stochasticAlertValue: 20
+      "yahooKey": "",
+      "yahooHost": "",
+      "fidelityKey": "",
+      "fidelityHost": "",
+      "optionChainLen": 10,
+      "refreshInterval": 60000,
+      "theme": "dark",
+      "GreenBarStrategy": {
+        "volumeAlertValue": 1000,
+        "stochasticAlertValue": 20
       },
-      RsiStochStrategy: {
-        RsiMaxValue: 70,
-        RsiMinValue: 30,
-        StochasticMaxValue: 80,
-        StochasticMinValue: 20,
-       },
-      themeName: "dark"
+      "RsiStochStrategy": {
+        "RsiMaxValue": 70,
+        "RsiMinValue": 30,
+        "StochasticMaxValue": 80,
+        "StochasticMinValue": 20,
+      },
     };
 
     saveData.yahooHost = this.yahooHost
@@ -122,36 +122,38 @@ export default class ConstManager {
     saveData.fidelityKey = this.fidelityKey
     saveData.optionChainLen = this.optionChainLength
     saveData.refreshInterval = this.refreshInterval
+    saveData.theme = this.themeName1
     saveData.GreenBarStrategy.volumeAlertValue = this.volumeAlertValue
     saveData.GreenBarStrategy.stochasticAlertValue = this.stochasticAlertValue
     saveData.RsiStochStrategy.RsiMaxValue = this.rsiMaxValue
     saveData.RsiStochStrategy.RsiMinValue = this.rsiMinValue
     saveData.RsiStochStrategy.StochasticMaxValue = this.stochasticMaxValue
     saveData.RsiStochStrategy.StochasticMinValue = this.stochasticMinValue
-    saveData.themeName = this.themeName
     
-    localStorage.setItem(this.constManagerName, JSON.stringify(saveData))
+    const u=JSON.stringify(saveData);
+    localStorage.setItem(this.constManagerName, u)
+    logger.info(u);
   }
 
   Restore() {
     let loadData: SaveData = {
-      yahooKey: "",
-      yahooHost: "",
-      fidelityKey: "",
-      fidelityHost: "",
-      optionChainLen: 10,
-      refreshInterval: 60000,
-      GreenBarStrategy: {
-        volumeAlertValue: 1000,
-        stochasticAlertValue: 20
+      "yahooKey": "",
+      "yahooHost": "",
+      "fidelityKey": "",
+      "fidelityHost": "",
+      "optionChainLen": 10,
+      "refreshInterval": 60000,
+      "theme": "dark",
+      "GreenBarStrategy": {
+        "volumeAlertValue": 1000,
+        "stochasticAlertValue": 20
       },
-      RsiStochStrategy: {
-        RsiMaxValue: 70,
-        RsiMinValue: 30,
-        StochasticMaxValue: 80,
-        StochasticMinValue: 20,
+      "RsiStochStrategy": {
+        "RsiMaxValue": 70,
+        "RsiMinValue": 30,
+        "StochasticMaxValue": 80,
+        "StochasticMinValue": 20,
        },
-      themeName: "dark"
     };
 
     const itemFromStorage = localStorage.getItem(this.constManagerName)
@@ -169,7 +171,7 @@ export default class ConstManager {
       this.setRsiMinValue(loadData.RsiStochStrategy.RsiMinValue)
       this.setStochasticMaxValue(loadData.RsiStochStrategy.StochasticMaxValue)
       this.setStochasticMinValue(loadData.RsiStochStrategy.StochasticMinValue)
-      this.setThemeName(loadData.themeName)
+      this.setThemeName(loadData.theme)
     }
   }
 }
